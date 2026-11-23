@@ -1,0 +1,56 @@
+/* 두 번째 참고 이미지의 위치: 상단 바, 중앙 이미지, 좌우 이동, 우측 인벤토리, 하단 대사. */
+.game-root { -fx-background-color: #0e0d0c; -fx-font-family: "Malgun Gothic", "Arial"; }
+.top-bar {
+    -fx-min-height: 60px; -fx-pref-height: 60px; -fx-max-height: 60px;
+    -fx-background-color: #161310; -fx-border-color: #7e6645; -fx-border-width: 0 0 2px 0;
+    -fx-padding: 5px 10px;
+}
+.timer-text { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #e1c59a; }
+.header-icon-button {
+    -fx-pref-width: 45px; -fx-pref-height: 45px; -fx-min-width: 45px;
+    -fx-background-color: #201a15; -fx-border-color: #aa8760; -fx-border-width: 2px;
+    -fx-border-radius: 6px; -fx-background-radius: 6px; -fx-text-fill: #dfbb8c;
+    -fx-font-size: 27px; -fx-cursor: hand;
+}
+.header-icon-button:hover { -fx-background-color: #5b3427; -fx-border-color: #f0cb91; }
+.play-area { -fx-background-color: #181410; }
+.visual-area { -fx-background-color: #201b18; }
+.room-holder { -fx-background-color: #211913; }
+.room-canvas { -fx-background-color: linear-gradient(to bottom, #30271f, #17120f); }
+.room-placeholder {
+    -fx-text-fill: #c6ab80; -fx-font-size: 24px; -fx-text-alignment: center;
+    -fx-alignment: center; -fx-line-spacing: 14px;
+}
+.room-hotspot { -fx-background-color: transparent; }
+.room-hotspot:hover { -fx-background-color: rgba(207, 156, 79, 0.12); -fx-border-color: #d2ae7b; -fx-border-width: 1px; }
+.nav-button {
+    -fx-background-color: rgba(15, 11, 10, 0.68); -fx-text-fill: #dcc49a;
+    -fx-font-size: 27px; -fx-font-weight: bold; -fx-border-color: #c2a67d;
+    -fx-border-width: 0 1px 0 1px; -fx-padding: 15px 5px;
+    -fx-cursor: hand;
+}
+.nav-button:hover { -fx-background-color: rgba(109, 69, 38, 0.9); }
+.narration-bar {
+    -fx-background-color: rgba(18, 15, 14, 0.96); -fx-border-color: #9f8359;
+    -fx-border-width: 2px 0 0 0; -fx-pref-height: 86px; -fx-min-height: 86px;
+    -fx-padding: 15px 25px;
+}
+.narration { -fx-font-size: 19px; -fx-text-fill: #d5b991; }
+.inventory-panel {
+    -fx-background-color: #211c17; -fx-border-color: #ae8d62;
+    -fx-border-width: 0 0 0 2px; -fx-padding: 11px 9px;
+}
+.inventory-title {
+    -fx-text-fill: #e8cea4; -fx-font-size: 18px; -fx-font-weight: bold;
+    -fx-alignment: center; -fx-max-width: Infinity;
+}
+.inventory-scroll, .inventory-scroll > .viewport { -fx-background-color: transparent; }
+.inventory-scroll { -fx-background-insets: 0; -fx-padding: 0; -fx-border-width: 0; }
+.inventory-scroll .scroll-bar:vertical { -fx-pref-width: 7px; }
+.inventory-slot {
+    -fx-background-color: #14110f; -fx-border-color: #ac9069; -fx-border-width: 2px;
+    -fx-border-radius: 6px; -fx-background-radius: 6px;
+    -fx-min-height: 73px; -fx-pref-height: 73px; -fx-max-width: Infinity;
+}
+.inventory-slot-filled { -fx-text-fill: #daba7a; -fx-font-size: 36px; -fx-cursor: hand; }
+.inventory-slot-filled:hover { -fx-background-color: #3a281c; -fx-border-color: #edd09b; }

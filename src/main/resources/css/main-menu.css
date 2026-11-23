@@ -1,0 +1,3 @@
+/* 이전 메인화면의 크기/배치를 바꾸지 않고 색상만 보정. */
+.game-title { -fx-text-fill: #ead8be; }
+.game-menu-button { -fx-cursor: hand; }
