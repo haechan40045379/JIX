@@ -1,0 +1,12 @@
+이 폴더에 아래 이름으로 이미지를 넣으면 자동으로 붙습니다. (없으면 기본 도형으로 실행)
+프롬프트는 KitchenStorage/이미지_프롬프트.md 참고.
+
+kitchen_bg.png          주방 배경 (16:9, 예: 1672x941) - 클릭 좌표가 이 그림에 맞춰져 있음
+storage_bg.png          지하 저장고 배경 (16:9) - 클릭 좌표가 이 그림에 맞춰져 있음
+fridge_puzzle_bg.png    냉장고 안 도형 퍼즐 판 (5:3, 600x360) - 도형은 그리지 말 것
+flashlight.png          손전등 (투명 배경) - 인벤토리 아이콘용, 아직 미사용
+fridge_key.png          냉장고 열쇠 (투명 배경) - 인벤토리 아이콘용, 아직 미사용
+key_fragment_1.png      탈출 열쇠 조각 (투명 배경) - 인벤토리 아이콘용, 아직 미사용
+
+배경 이미지가 들어가면 클릭 영역은 투명해지고, 마우스를 올렸을 때만 테두리와 이름이 보입니다.
+그림을 다시 뽑으면 *View.fxml 의 Button layoutX/layoutY/prefWidth/prefHeight 를 다시 맞추세요.

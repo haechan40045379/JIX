@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!--
+  스톱워치 확대: stopwatch_closeup.png (1420x941 → 560x371) 위에
+  움직이는 바늘, 황동 명판의 숫자 표시, 위쪽 빨간 버튼(시작/정지)을 겹친다.
+-->
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.StopwatchController"
+      alignment="CENTER" spacing="10">
+
+    <Label fx:id="targetLabel" styleClass="puzzle-text" wrapText="true" maxWidth="560"/>
+
+    <Pane fx:id="stage" prefWidth="560" prefHeight="371" minWidth="560" minHeight="371" maxWidth="560" maxHeight="371">
+        <Rectangle width="560" height="371" fill="#3a352d" stroke="#8a7a5c" strokeWidth="2"/>
+        <ImageView fx:id="deviceImage" fitWidth="560" fitHeight="371"/>
+
+        <!-- 그림에 그려진 고정 바늘을 가리는 패치 (그림이 있을 때만 보임) -->
+        <Rectangle fx:id="handCover" x="278.5" y="117" width="7" height="39" fill="#dccfb3" visible="false"/>
+        <Line fx:id="hand" startX="282" startY="164" endX="282" endY="90"
+              stroke="#1e1a16" strokeWidth="4" strokeLineCap="ROUND"/>
+        <Circle centerX="282" centerY="164" radius="8" fill="#3a3530" stroke="#141210" strokeWidth="2"/>
+
+        <!-- 황동 명판 위 숫자 -->
+        <Label fx:id="timeLabel" text="00.00" layoutX="236" layoutY="262" prefWidth="92" prefHeight="31"
+               alignment="CENTER"
+               style="-fx-font-family: 'Consolas', monospace; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2a2118;"/>
+
+        <!-- 빨간 버튼: 클릭하면 시작/정지 -->
+        <Button fx:id="topButton" layoutX="246" layoutY="18" prefWidth="72" prefHeight="40"
+                style="-fx-background-color: transparent; -fx-cursor: hand;" onAction="#onTopButton"/>
+    </Pane>
+
+    <HBox alignment="CENTER" spacing="12">
+        <Button fx:id="startButton" text="시작" prefWidth="100" onAction="#onStart"/>
+        <Button fx:id="stopButton" text="정지" prefWidth="100" disable="true" onAction="#onStop"/>
+        <Button fx:id="resetButton" text="리셋" prefWidth="100" onAction="#onReset"/>
+    </HBox>
+
+    <Label fx:id="resultLabel" styleClass="puzzle-text" wrapText="true" maxWidth="560"/>
+</VBox>

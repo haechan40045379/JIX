@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!--
+  지하 저장고 (960 x 540, 16:9). 좌표는 res/images/storage_bg.png (1672x941 생성 이미지) 기준.
+  userData 가 있는 버튼은 클릭 시 그 문장을 메시지로 보여주는 분위기용 오브젝트.
+-->
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.StorageController"
+      prefWidth="960" prefHeight="540">
+
+    <Rectangle width="960" height="540" fill="#2b3036"/>
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+
+    <Label text="지하 저장고" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <!-- 왼쪽 선반 (분위기) -->
+    <Button text="선반" styleClass="hotspot"
+            layoutX="28" layoutY="72" prefWidth="205" prefHeight="125"
+            userData="절임 병들이 줄지어 있다. 내용물은 알아볼 수 없을 만큼 탁하다."
+            onAction="#onFlavor"/>
+
+    <!-- 선반 위 천 (분위기) -->
+    <Button text="천" styleClass="hotspot"
+            layoutX="60" layoutY="225" prefWidth="50" prefHeight="85"
+            userData="눅눅한 천 아래 찢어진 수첩 한 장. '불빛은 다시 볼 수 있다. 서두르다 틀리면 처음부터다. - 참가자 12'"
+            onAction="#onFlavor"/>
+
+    <!-- 순서 패널 (퍼즐 2, 손전등 필요) -->
+    <Button fx:id="sequencePanelButton" text="순서 패널" styleClass="hotspot"
+            layoutX="208" layoutY="202" prefWidth="130" prefHeight="60"
+            onAction="#onSequencePanel"/>
+
+    <!-- 왼쪽 아래 큰 상자 (분위기) -->
+    <Button text="큰 상자" styleClass="hotspot"
+            layoutX="0" layoutY="333" prefWidth="118" prefHeight="143"
+            userData="못이 박힌 상자. 옆면에 '시험장 비품 - 반출 금지'라고 찍혀 있다."
+            onAction="#onFlavor"/>
+
+    <!-- 전구 (분위기) -->
+    <Button text="전구" styleClass="hotspot"
+            layoutX="425" layoutY="0" prefWidth="98" prefHeight="86"
+            userData="지직거리는 전구 옆에 작은 유리 렌즈가 달려 있다. 렌즈가 천천히 이쪽을 향해 돈다. 누군가 지켜보고 있다."
+            onAction="#onFlavor"/>
+
+    <!-- 스톱워치 장치 (퍼즐 1) -->
+    <Button fx:id="stopwatchButton" text="스톱워치" styleClass="hotspot"
+            layoutX="449" layoutY="202" prefWidth="86" prefHeight="96"
+            onAction="#onStopwatch"/>
+
+    <!-- 작업대 아래 상자 (냉장고 열쇠 보관) -->
+    <Button fx:id="keyBoxButton" text="작업대 아래 상자" styleClass="hotspot"
+            layoutX="394" layoutY="374" prefWidth="100" prefHeight="60"
+            onAction="#onKeyBox"/>
+
+    <!-- 술통 (분위기) -->
+    <Button text="술통" styleClass="hotspot"
+            layoutX="638" layoutY="232" prefWidth="104" prefHeight="205"
+            userData="술통을 두드려 보니 텅 빈 소리가 난다."
+            onAction="#onFlavor"/>
+
+    <!-- 주방으로 올라가는 계단 -->
+    <Button text="주방 계단" styleClass="hotspot"
+            layoutX="745" layoutY="34" prefWidth="210" prefHeight="392"
+            onAction="#goToKitchen"/>
+</Pane>

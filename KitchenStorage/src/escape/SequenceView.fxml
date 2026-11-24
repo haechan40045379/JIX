@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!-- 순서 패널 확대: sequence_closeup.png (정사각형) 위에 컨트롤러가 버튼 4개(원)와 번호를 겹쳐 그린다 -->
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.SequenceController"
+      alignment="CENTER" spacing="10">
+
+    <Label fx:id="infoLabel" text="재생 버튼을 눌러 불빛 순서를 기억하라." styleClass="puzzle-text"/>
+
+    <Pane fx:id="panel" prefWidth="420" prefHeight="420" minWidth="420" minHeight="420" maxWidth="420" maxHeight="420">
+        <Rectangle width="420" height="420" fill="#3a3632" stroke="#8a7a5c" strokeWidth="2"/>
+        <ImageView fx:id="panelImage" fitWidth="420" fitHeight="420"/>
+    </Pane>
+
+    <Label fx:id="progressLabel" styleClass="puzzle-text"/>
+    <Button fx:id="playButton" text="▶ 순서 재생" prefWidth="160" onAction="#onPlay"/>
+</VBox>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!--
+  냉장고 안 도형 퍼즐: fridge_puzzle_bg.png (1619x971 → 720x432).
+  그림의 어두운 가로 홈 = 슬롯 줄, 그 아래 금속판 = 조각 놓는 자리. 슬롯·조각은 컨트롤러가 그린다.
+-->
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.ShapePuzzleController"
+      alignment="CENTER" spacing="8">
+
+    <Label fx:id="infoLabel" styleClass="puzzle-text" wrapText="true" maxWidth="700"
+           text="도형을 드래그해 같은 모양의 홈에 끼워라. 클릭(또는 우클릭)하면 90° 회전한다."/>
+
+    <Pane fx:id="board" prefWidth="720" prefHeight="432" minWidth="720" minHeight="432" maxWidth="720" maxHeight="432">
+        <Rectangle width="720" height="432" fill="#3a352d" stroke="#8a7a5c" strokeWidth="2"/>
+        <!-- 그림이 없을 때만 보이는 대체 판 -->
+        <Rectangle fx:id="fallbackPlate" layoutX="140" layoutY="96" width="460" height="225" fill="#57514a"
+                   arcWidth="12" arcHeight="12"/>
+        <Rectangle fx:id="fallbackStrip" layoutX="153" layoutY="136" width="407" height="55" fill="#24201b"
+                   arcWidth="10" arcHeight="10"/>
+        <ImageView fx:id="background" fitWidth="720" fitHeight="432"/>
+    </Pane>
+
+    <HBox alignment="CENTER" spacing="12">
+        <Label fx:id="progressLabel" styleClass="puzzle-text"/>
+        <Button fx:id="resetButton" text="조각 되돌리기" onAction="#onReset"/>
+    </HBox>
+</VBox>

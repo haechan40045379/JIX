@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!--
+  주방 (960 x 540, 16:9). 좌표는 res/images/kitchen_bg.png (1672x941 생성 이미지) 기준.
+  이미지가 있으면 클릭 영역은 투명해지고, 마우스를 올렸을 때만 테두리와 이름이 보인다.
+  userData 가 있는 버튼은 클릭 시 그 문장을 메시지로 보여주는 분위기용 오브젝트.
+-->
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.KitchenController"
+      prefWidth="960" prefHeight="540">
+
+    <Rectangle width="960" height="540" fill="#4a4038"/>
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+
+    <Label text="주방" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <!-- 왼쪽 벽 선반의 병들 (분위기) -->
+    <Button text="선반" styleClass="hotspot"
+            layoutX="49" layoutY="66" prefWidth="215" prefHeight="115"
+            userData="먼지 쌓인 병과 양철통. 라벨은 모두 지워져 있다."
+            onAction="#onFlavor"/>
+
+    <!-- 조리대 위 쪽지 (단서) -->
+    <Button text="쪽지" styleClass="hotspot"
+            layoutX="100" layoutY="290" prefWidth="80" prefHeight="40"
+            onAction="#onNote"/>
+
+    <!-- 조리대 아래 나무 상자 (분위기) -->
+    <Button text="나무 상자" styleClass="hotspot"
+            layoutX="72" layoutY="362" prefWidth="100" prefHeight="58"
+            userData="빈 병 사이, 상자 바닥에 손톱으로 긁은 글씨가 있다. '물소리를 세어라. - 참가자 7'"
+            onAction="#onFlavor"/>
+
+    <!-- 냉장고 (메인) -->
+    <Button fx:id="fridgeButton" text="냉장고" styleClass="hotspot"
+            layoutX="290" layoutY="130" prefWidth="156" prefHeight="300"
+            onAction="#onFridge"/>
+
+    <!-- 냄비 걸이 (분위기) -->
+    <Button text="조리도구" styleClass="hotspot"
+            layoutX="468" layoutY="98" prefWidth="148" prefHeight="125"
+            userData="녹슨 프라이팬과 국자. 그런데 국자 하나만 최근에 씻은 듯 깨끗하다. 이 저택에 나 말고 누가 있는 걸까."
+            onAction="#onFlavor"/>
+
+    <!-- 싱크대 수도꼭지 (스톱워치 5초 단서) -->
+    <Button text="싱크대" styleClass="hotspot"
+            layoutX="448" layoutY="236" prefWidth="186" prefHeight="66"
+            onAction="#onSink"/>
+
+    <!-- 싱크대 아래 수납장 (손전등) -->
+    <Button fx:id="cabinetButton" text="수납장" styleClass="hotspot"
+            layoutX="455" layoutY="305" prefWidth="170" prefHeight="122"
+            onAction="#onCabinet"/>
+
+    <!-- 지하 저장고 문 -->
+    <Button text="지하 저장고 문" styleClass="hotspot"
+            layoutX="634" layoutY="99" prefWidth="184" prefHeight="320"
+            onAction="#goToStorage"/>
+
+    <!-- 식당으로 가는 출입구 (팀원 방) -->
+    <Button text="식당" styleClass="hotspot"
+            layoutX="858" layoutY="82" prefWidth="100" prefHeight="352"
+            onAction="#goToDining"/>
+</Pane>

@@ -1,0 +1,179 @@
+.root {
+    -fx-font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+}
+
+/* 방 안의 클릭 지점. 배경 이미지를 붙인 뒤에는 -fx-background-color를 transparent로,
+   border-color를 transparent로 바꾸면 이미지 위 투명 클릭 영역이 된다. */
+.hotspot {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-background-radius: 0;
+    -fx-border-color: rgba(255, 240, 200, 0.7);
+    -fx-border-width: 2;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-text-alignment: center;
+    -fx-cursor: hand;
+}
+
+.hotspot:hover {
+    -fx-background-color: rgba(255, 240, 200, 0.28);
+}
+
+/* 배경 이미지가 붙은 방: 클릭 영역은 평소 투명, 마우스를 올리면 테두리와 이름 표시 */
+.with-image .hotspot {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: transparent;
+}
+
+.with-image .hotspot:hover {
+    -fx-background-color: rgba(255, 240, 200, 0.12);
+    -fx-border-color: rgba(255, 240, 200, 0.85);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, black, 4, 0.8, 0, 0);
+}
+
+/* 배경 이미지 위에서는 방 이름이 잘 보이도록 그림자 */
+.with-image .room-title {
+    -fx-effect: dropshadow(gaussian, black, 6, 0.9, 0, 0);
+}
+
+/* 단서 기록 버튼 / 창 */
+.clue-button {
+    -fx-background-color: #2d2924;
+    -fx-border-color: #8a7a5c;
+    -fx-text-fill: #e0d6c0;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+}
+
+.clue-button:hover {
+    -fx-background-color: #3b352d;
+}
+
+.clue-new {
+    -fx-border-color: #f0c060;
+    -fx-text-fill: #f0c060;
+    -fx-effect: dropshadow(gaussian, #f0c060, 8, 0.3, 0, 0);
+}
+
+.clue-item {
+    -fx-background-color: #f3e6c4;
+    -fx-text-fill: #3a2a10;
+    -fx-font-size: 15px;
+    -fx-padding: 10 14 10 14;
+}
+
+.log-tabs .tab-header-background {
+    -fx-background-color: #2d2924;
+}
+
+.log-tabs .tab {
+    -fx-background-color: #3b352d;
+    -fx-background-radius: 0;
+}
+
+.log-tabs .tab:selected {
+    -fx-background-color: #57503f;
+}
+
+.log-tabs .tab .tab-label {
+    -fx-text-fill: #e8dcc0;
+}
+
+.log-scroll,
+.log-scroll > .viewport {
+    -fx-background-color: #1e1b18;
+    -fx-background: #1e1b18;
+}
+
+/* 인벤토리 칸 */
+.inv-slot {
+    -fx-background-color: #2d2924;
+    -fx-border-color: #5e5443;
+    -fx-border-width: 1;
+}
+
+.inv-item {
+    -fx-border-color: #8a7a5c;
+    -fx-cursor: hand;
+}
+
+.inv-item:hover {
+    -fx-background-color: #3b352d;
+}
+
+.inv-selected {
+    -fx-background-color: #4a3f2a;
+    -fx-border-color: #f0c060;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, #f0c060, 8, 0.4, 0, 0);
+}
+
+.room-title {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.hud {
+    -fx-background-color: #1e1b18;
+    -fx-padding: 8 14 8 14;
+}
+
+.hud-label {
+    -fx-text-fill: #e0d6c0;
+    -fx-font-size: 14px;
+}
+
+.message-bar {
+    -fx-background-color: #1e1b18;
+    -fx-text-fill: #f3e6c4;
+    -fx-font-size: 15px;
+    -fx-padding: 10 14 10 14;
+}
+
+.overlay-backdrop {
+    -fx-background-color: rgba(0, 0, 0, 0.65);
+}
+
+.overlay-box {
+    -fx-background-color: #2d2924;
+    -fx-border-color: #8a7a5c;
+    -fx-border-width: 2;
+    -fx-padding: 16;
+}
+
+.overlay-title {
+    -fx-text-fill: #f0e0b0;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.puzzle-text {
+    -fx-text-fill: #e8dcc0;
+    -fx-font-size: 15px;
+}
+
+.note-paper {
+    -fx-background-color: #f3e6c4;
+    -fx-text-fill: #3a2a10;
+    -fx-font-size: 19px;
+    -fx-padding: 28 36 28 36;
+}
+
+.stopwatch-display {
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-size: 64px;
+    -fx-text-fill: #f0e0b0;
+    -fx-background-color: #14120f;
+    -fx-padding: 6 24 6 24;
+}
+
+.pad {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
