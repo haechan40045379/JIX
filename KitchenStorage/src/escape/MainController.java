@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,14 +19,18 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 /** 메인 화면 컨트롤러: 방 전환, 오버레이, HUD(인벤토리/열쇠 조각) 관리. */
 public class MainController implements GameHost {
 
+    @FXML private BorderPane gameLayer;
+    @FXML private StackPane clearLayer;
     @FXML private StackPane roomContainer;
     @FXML private StackPane overlayLayer;
     @FXML private StackPane overlayContent;
@@ -52,16 +57,37 @@ public class MainController implements GameHost {
     private void initialize() {
         rooms.put(KITCHEN, loadRoom("KitchenView.fxml"));
         rooms.put(STORAGE, loadRoom("StorageView.fxml"));
+        rooms.put(DINING, loadRoom("DiningView.fxml"));
+        rooms.put(ENTRANCE, loadRoom("EntranceView.fxml"));
         roomNames.put(KITCHEN, "주방");
         roomNames.put(STORAGE, "지하 저장고");
+        roomNames.put(DINING, "식당");
+        roomNames.put(ENTRANCE, "현관 홀");
 
         inventoryBox.getChildren().setAll(new InventoryBar(state, this));
         fullScreenButton.setTooltip(new Tooltip("전체화면 (F11)"));
         watchFullScreen();
-        state.addListener(this::refreshHud);
-        refreshHud();
+        state.addListener(this::refreshGameView);
+        refreshGameView();
         goTo(KITCHEN);
         showMessage("어두운 주방이다. 낡은 냉장고가 눈에 띈다.");
+    }
+
+    private void refreshGameView() {
+        if (!state.isGameCleared()) {
+            refreshHud();
+        } else if (!clearLayer.isVisible()) {
+            closeOverlay();
+            gameLayer.setDisable(true);
+            gameLayer.setVisible(false);
+            clearLayer.setOpacity(0);
+            clearLayer.setVisible(true);
+            clearLayer.requestFocus();
+
+            FadeTransition fade = new FadeTransition(Duration.millis(650), clearLayer);
+            fade.setToValue(1);
+            fade.play();
+        }
     }
 
     private Parent loadRoom(String fxmlName) {
@@ -90,6 +116,9 @@ public class MainController implements GameHost {
     // ================= 단서 기록 창 =================
     @FXML
     private void onShowClues() {
+        if (state.isGameCleared()) {
+            return;
+        }
         seenClueCount = state.getClues().size();
         refreshHud();
 
@@ -146,6 +175,9 @@ public class MainController implements GameHost {
     // ================= GameHost =================
     @Override
     public void goTo(String roomId) {
+        if (state.isGameCleared()) {
+            return;
+        }
         Parent room = rooms.get(roomId);
         if (room == null) {
             showMessage("아직 연결되지 않은 방입니다: " + roomId);
@@ -158,6 +190,9 @@ public class MainController implements GameHost {
 
     @Override
     public void showOverlay(String title, Node content) {
+        if (state.isGameCleared()) {
+            return;
+        }
         closeOverlay();
         overlayTitle.setText(title);
         overlayContent.getChildren().setAll(content);
@@ -166,6 +201,9 @@ public class MainController implements GameHost {
 
     @Override
     public void openPuzzle(String title, String fxmlName, Runnable onSolved) {
+        if (state.isGameCleared()) {
+            return;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(MainController.class.getResource(fxmlName));
             Parent puzzleRoot = loader.load();
@@ -190,6 +228,9 @@ public class MainController implements GameHost {
 
     @Override
     public void showMessage(String message) {
+        if (state.isGameCleared()) {
+            return;
+        }
         messageLabel.setText(message);
         // 같은 문장 연속 중복은 한 번만 기록, 최대 MAX_LOG 개 유지
         if (messageLog.isEmpty() || !messageLog.get(messageLog.size() - 1).equals(message)) {
@@ -208,6 +249,9 @@ public class MainController implements GameHost {
     /** HUD 버튼: 전체화면 ↔ 창 모드 (키보드 F11 / Alt+Enter 와 같음). */
     @FXML
     private void onToggleFullScreen() {
+        if (state.isGameCleared()) {
+            return;
+        }
         if (roomLabel.getScene() != null && roomLabel.getScene().getWindow() instanceof Stage) {
             Stage stage = (Stage) roomLabel.getScene().getWindow();
             Main.toggleFullScreen(stage);

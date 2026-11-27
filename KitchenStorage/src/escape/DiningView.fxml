@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!--
+  식당 (960 x 540, 16:9). 좌표는 res/images/dining_bg.png (1671x941) 기준.
+  이미지가 있으면 클릭 영역은 투명해지고, 마우스를 올렸을 때만 테두리와 이름이 보인다.
+  userData 가 있는 버튼은 클릭 시 그 문장을 메시지로 보여주는 분위기/일반 조사 오브젝트.
+-->
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.DiningController"
+      prefWidth="960" prefHeight="540">
+
+    <Rectangle width="960" height="540" fill="#3d352e"/>
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+
+    <Label text="식당" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <!-- 왼쪽 출입구: 현관 홀 이동 -->
+    <Button text="현관 홀" styleClass="hotspot"
+            layoutX="0" layoutY="92" prefWidth="102" prefHeight="350"
+            onAction="#goToEntrance"/>
+
+    <!-- 왼쪽 커다란 유리 식기장: 식기 수납장 조사 -->
+    <Button text="식기 수납장" styleClass="hotspot"
+            layoutX="136" layoutY="146" prefWidth="136" prefHeight="280"
+            userData="커다란 유리 식기장 안에 오래된 접시와 찻잔, 주전자가 가지런히 정리되어 있다."
+            onAction="#onFlavor"/>
+
+    <!-- 왼쪽 벽면 촛대 조명 (분위기용 조사) -->
+    <Button text="벽면 조명" styleClass="hotspot"
+            layoutX="310" layoutY="152" prefWidth="42" prefHeight="68"
+            userData="벽면의 촛대 조명이 희미하게 흔들리며 식당 안을 비추고 있다."
+            onAction="#onFlavor"/>
+
+    <!-- 중앙 벽면의 커다란 풍경화: 일반 액자 조사 -->
+    <Button text="풍경화 액자" styleClass="hotspot"
+            layoutX="372" layoutY="118" prefWidth="246" prefHeight="163"
+            userData="호숫가 저택을 그린 커다란 풍경화다. 색이 바래 있지만 특이한 장치는 보이지 않는다."
+            onAction="#onFlavor"/>
+
+    <!-- 오른쪽 벽면 촛대 조명 (분위기용 조사) -->
+    <Button text="벽면 조명" styleClass="hotspot"
+            layoutX="644" layoutY="152" prefWidth="42" prefHeight="68"
+            userData="벽면의 촛대 조명이 희미하게 흔들리며 식당 안을 비추고 있다."
+            onAction="#onFlavor"/>
+
+    <!-- 중앙 식탁: 식기 배열 퍼즐 -->
+    <Button fx:id="tableButton" text="식탁" styleClass="hotspot"
+            layoutX="276" layoutY="296" prefWidth="406" prefHeight="216"
+            onAction="#onDiningTable"/>
+
+    <!-- 오른쪽 벽면의 작은 찢어진 그림 액자: 그림 복원 퍼즐 -->
+    <Button fx:id="paintingButton" text="작은 액자" styleClass="hotspot"
+            layoutX="746" layoutY="170" prefWidth="76" prefHeight="68"
+            onAction="#onTornPainting"/>
+
+    <!-- 오른쪽 아래 낮은 목재 수납장 (분위기용 조사) -->
+    <Button text="목재 수납장" styleClass="hotspot"
+            layoutX="686" layoutY="280" prefWidth="148" prefHeight="148"
+            userData="낮은 목재 수납장 위에 마른 식물이 꽂힌 꽃병과 작은 나무 상자가 놓여 있다."
+            onAction="#onFlavor"/>
+
+    <!-- 오른쪽 출입구: 주방 이동 -->
+    <Button text="주방" styleClass="hotspot"
+            layoutX="856" layoutY="90" prefWidth="104" prefHeight="344"
+            onAction="#goToKitchen"/>
+</Pane>

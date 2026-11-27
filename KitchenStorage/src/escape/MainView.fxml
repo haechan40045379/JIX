@@ -12,7 +12,7 @@
            fx:controller="escape.MainController">
 
     <!-- 기본 화면: 상단 HUD / 방 / 하단 메시지 -->
-    <BorderPane>
+    <BorderPane fx:id="gameLayer">
         <top>
             <HBox spacing="16" styleClass="hud" alignment="CENTER_LEFT" minHeight="56">
                 <Label fx:id="roomLabel" styleClass="hud-label" style="-fx-font-weight: bold;"/>
@@ -43,5 +43,11 @@
             </HBox>
             <StackPane fx:id="overlayContent"/>
         </VBox>
+    </StackPane>
+
+    <StackPane fx:id="clearLayer" managed="${clearLayer.visible}" visible="false"
+               focusTraversable="true"
+               style="-fx-background-color: #110e0c;">
+        <fx:include source="ClearView.fxml"/>
     </StackPane>
 </StackPane>

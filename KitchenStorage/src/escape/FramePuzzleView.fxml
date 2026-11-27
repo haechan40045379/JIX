@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!--
+  현관 홀 액자 회전 퍼즐: entrance_frame.png (1501x1048).
+  초기 회전 180°에서 시작해 좌/우 90°씩 회전시켜 정상 방향(0°)으로 맞추면 클리어된다.
+-->
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.FramePuzzleController"
+      alignment="CENTER" spacing="12">
+
+    <Label fx:id="infoLabel" styleClass="puzzle-text" wrapText="true" maxWidth="460"
+           text="거꾸로 걸린 액자를 돌려 바로잡으라."/>
+
+    <StackPane fx:id="frameStage" prefWidth="460" prefHeight="340"
+               minWidth="460" minHeight="340" maxWidth="460" maxHeight="340">
+        <Rectangle width="460" height="340" fill="#24201b" stroke="#8a7a5c" strokeWidth="2"/>
+        <ImageView fx:id="frameImage" fitWidth="260" fitHeight="182" preserveRatio="true" smooth="true"/>
+        <Label fx:id="fallbackLabel" text="풍경화 액자" visible="false" styleClass="note-paper"/>
+    </StackPane>
+
+    <HBox alignment="CENTER" spacing="16">
+        <Button fx:id="leftButton" text="↺ 왼쪽 회전" prefWidth="136" styleClass="clue-button"
+                onAction="#onRotateLeft"/>
+        <Button fx:id="rightButton" text="↻ 오른쪽 회전" prefWidth="136" styleClass="clue-button"
+                onAction="#onRotateRight"/>
+    </HBox>
+</VBox>

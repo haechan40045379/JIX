@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!--
+  현관 홀 (960 x 540, 16:9). 좌표는 res/images/entrance_bg.png (1671x941) 기준.
+  이미지가 있으면 클릭 영역은 투명해지고, 마우스를 올렸을 때만 테두리와 이름이 보인다.
+  userData 가 있는 버튼은 클릭 시 그 문장을 메시지로 보여주는 분위기용 오브젝트.
+-->
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.EntranceController"
+      prefWidth="960" prefHeight="540">
+
+    <Rectangle width="960" height="540" fill="#323840"/>
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+
+    <Label text="현관 홀" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <!-- 왼쪽 출입구: 식당 이동 -->
+    <Button text="식당" styleClass="hotspot"
+            layoutX="0" layoutY="58" prefWidth="156" prefHeight="392"
+            onAction="#goToDining"/>
+
+    <!-- 왼쪽 아래 화분 (분위기용 조사) -->
+    <Button text="화분" styleClass="hotspot"
+            layoutX="176" layoutY="250" prefWidth="112" prefHeight="202"
+            userData="커다란 화분의 잎사귀마다 먼지가 두껍게 쌓여 있다."
+            onAction="#onFlavor"/>
+
+    <!-- 중앙의 커다란 목재 현관문: 최종 탈출문 (다른 방과 연결되지 않음) -->
+    <Button text="현관문" styleClass="hotspot"
+            layoutX="308" layoutY="92" prefWidth="340" prefHeight="350"
+            onAction="#onFrontDoor"/>
+
+    <!-- 오른쪽 벽면의 거꾸로 걸린 풍경화 액자: 회전 퍼즐 -->
+    <Button fx:id="frameButton" text="거꾸로 걸린 액자" styleClass="hotspot"
+            layoutX="688" layoutY="122" prefWidth="176" prefHeight="144"
+            onAction="#onUpsideDownFrame"/>
+
+    <!-- 오른쪽 협탁 위의 작은 메모: 퍼즐 힌트(임시) -->
+    <Button text="협탁 위 메모" styleClass="hotspot"
+            layoutX="734" layoutY="300" prefWidth="76" prefHeight="42"
+            onAction="#onMemo"/>
+
+    <!-- 오른쪽 협탁 (분위기용 조사) -->
+    <Button text="협탁" styleClass="hotspot"
+            layoutX="696" layoutY="344" prefWidth="200" prefHeight="122"
+            userData="오래된 목재 협탁이다. 아래 선반에 낡은 책 몇 권과 작은 상자가 놓여 있다."
+            onAction="#onFlavor"/>
+</Pane>
