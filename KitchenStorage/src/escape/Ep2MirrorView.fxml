@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+
+<!-- 에피소드 2 퍼즐 화면. 내용은 Ep2MirrorController 가 코드로 그린다. -->
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.Ep2MirrorController" fx:id="root" alignment="CENTER" spacing="10"/>
