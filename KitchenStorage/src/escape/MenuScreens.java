@@ -43,7 +43,10 @@ final class MenuScreens {
     private final StackPane root = new StackPane();
     private final Pane navigation = new Pane();
     private final TranslateTransition fog;
-    private Runnable onStart;
+    private java.util.function.BiConsumer<GameState.Difficulty, Integer> onStart;
+    private Runnable onContinue;
+    private GameState.Difficulty chosenDifficulty = GameState.Difficulty.NORMAL;
+    private int chosenEpisode = 1;
     private IrisTransition iris;
     private StackPane dialog;
 
@@ -63,8 +66,13 @@ final class MenuScreens {
         return root;
     }
 
-    void setOnStart(Runnable onStart) {
+    /** 새 게임 시작 (난이도, 에피소드 번호). */
+    void setOnStart(java.util.function.BiConsumer<GameState.Difficulty, Integer> onStart) {
         this.onStart = onStart;
+    }
+
+    void setOnContinue(Runnable onContinue) {
+        this.onContinue = onContinue;
     }
 
     void stopFog() {
@@ -72,12 +80,20 @@ final class MenuScreens {
     }
 
     private void showTitle() {
-        VBox buttons = new VBox(12,
+        int savedEpisode = SaveManager.savedEpisode();
+        Button cont = button(savedEpisode == 2 ? "이어하기 (EP 02)" : "이어하기", this::continueGame);
+        if (!SaveManager.hasSave()) {
+            cont.setDisable(true);
+            cont.getStyleClass().add("save-missing");
+        }
+        VBox buttons = new VBox(6,
+                cont,
                 button("게임 시작", this::showEpisodes),
+                button("업적", this::showAchievements),
                 button("게임 설정", this::showSettings),
                 button("도움말", this::showHelp),
                 button("게임 종료", this::showExit));
-        buttons.relocate(374, 246);
+        buttons.relocate(374, 222);
         navigation.getChildren().setAll(buttons);
         FadeTransition fade = new FadeTransition(Duration.millis(450), buttons);
         fade.setFromValue(0);
@@ -93,19 +109,81 @@ final class MenuScreens {
         heading.relocate(0, 225);
 
         VBox first = episodeContent("EPISODE 01");
-        // 제목과 이미지 위치를 유지하도록 삭제한 상태 문구의 높이와 간격을 남긴다.
-        first.setPadding(new Insets(0, 0, 22, 0));
         first.getChildren().addAll(label("THE INITIATE", "episode-name"),
                 image("entrance_bg.png", 160, 90),
-                label("비밀 조직의 시험", "episode-detail"));
+                label("비밀 조직의 시험", "episode-detail"),
+                label("난이도 3단계 · 제한시간 40~90분", "episode-detail"));
+        VBox second = episodeContent("EPISODE 02");
+        second.getChildren().addAll(label("THE LANTERN", "episode-name"),
+                image("ep2_card.png", 160, 90),
+                label("호수 위의 등대", "episode-detail"),
+                label("엔딩 3종 · 40~90분", "episode-detail"));
         HBox cards = new HBox(20,
-                card(first, "EPISODE 01 THE INITIATE", this::startEpisode),
-                lockedCard("EPISODE 02"), lockedCard("EPISODE 03"));
+                card(first, "EPISODE 01 THE INITIATE", () -> showDifficulty(1)),
+                card(second, "EPISODE 02 THE LANTERN", () -> showDifficulty(2)),
+                lockedCard("EPISODE 03"));
         cards.relocate(172, 259);
         Button back = button("타이틀로 돌아가기", this::showTitle);
         back.relocate(374, 478);
         navigation.getChildren().setAll(heading, cards, back);
         navigation.requestFocus();
+    }
+
+    /** 에피소드 카드 클릭 → 난이도 선택. */
+    private void showDifficulty(int episode) {
+        chosenEpisode = episode;
+        GameState.Difficulty[] all = GameState.Difficulty.values();
+        Button[] choices = new Button[all.length + 1];
+        StringBuilder body = new StringBuilder();
+        for (int i = 0; i < all.length; i++) {
+            GameState.Difficulty d = all[i];
+            body.append(d.label).append(" : ").append(d.description);
+            if (i < all.length - 1) {
+                body.append("\n");
+            }
+            choices[i] = button(d.label, () -> {
+                closeDialog();
+                chosenDifficulty = d;
+                startEpisode();
+            });
+        }
+        choices[all.length] = button("취소", this::closeDialog);
+        if (SaveManager.hasSave()) {
+            body.append("\n\n※ 새로 시작하면 저장된 진행 상황은 덮어써집니다.");
+        }
+        showDialog(episode == 2 ? "EPISODE 02 - 난이도 선택" : "난이도 선택", body.toString(), choices);
+    }
+
+    private void continueGame() {
+        if (iris != null || onContinue == null) {
+            return;
+        }
+        navigation.setDisable(true);
+        iris = IrisTransition.play(root, () -> {
+            try {
+                onContinue.run();
+            } finally {
+                iris.dispose();
+                iris = null;
+                navigation.setDisable(dialog != null);
+            }
+        });
+    }
+
+    private void showAchievements() {
+        java.util.Set<String> owned = SaveManager.loadAchievements();
+        StringBuilder body = new StringBuilder();
+        int count = 0;
+        for (Achievement a : Achievement.values()) {
+            boolean have = owned.contains(a.name());
+            if (have) {
+                count++;
+            }
+            body.append(have ? "🏆 " : "🔒 ").append(a.title).append(" - ")
+                    .append(have ? a.description : "???").append("\n");
+        }
+        showDialog("업적 (" + count + "/" + Achievement.values().length + ")",
+                body.toString().trim(), button("닫기", this::closeDialog));
     }
 
     private void startEpisode() {
@@ -115,7 +193,7 @@ final class MenuScreens {
         navigation.setDisable(true);
         iris = IrisTransition.play(root, () -> {
             try {
-                onStart.run();
+                onStart.accept(chosenDifficulty, chosenEpisode);
             } finally {
                 iris.dispose();
                 iris = null;
@@ -169,6 +247,11 @@ final class MenuScreens {
                 button("전체화면 전환", () -> {
                     closeDialog();
                     Main.toggleFullScreen(stage);
+                }),
+                button(SoundManager.isMuted() ? "소리 켜기" : "소리 끄기", () -> {
+                    SoundManager.setMuted(!SoundManager.isMuted());
+                    closeDialog();
+                    showSettings();
                 }), button("닫기", this::closeDialog));
     }
 
@@ -190,7 +273,11 @@ final class MenuScreens {
                 • 인벤토리에서 사용 가능한 아이템을 클릭해 선택한 뒤 관련 오브젝트 클릭
                 • 아이템을 더블클릭하거나 우클릭해 상세 조사
                 • 단서 기록 버튼을 눌러 발견한 단서 확인
-                • F11 또는 Alt+Enter로 전체화면 전환""", button("닫기", this::closeDialog));
+                • F11 또는 Alt+Enter로 전체화면 전환
+                • 힌트(H) / 지도(M) 버튼으로 도움 받기, 메뉴(ESC)로 일시 정지·저장·종료
+                • 저택 곳곳에 숨겨진 흑등회 기록 6장을 모두 찾으면 결말이 달라진다
+                • EPISODE 02: 등대 꼭대기에서 등불을 켤지 끌지 직접 고른다 (엔딩 3종)
+                • 제한 시간이 0이 되면 게임 오버, 진행 상황은 자동 저장""", button("닫기", this::closeDialog));
     }
 
     private void showExit() {

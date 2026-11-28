@@ -6,20 +6,23 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<!-- 결과 화면: 탈출 성공 / 게임 오버 공용. 내용은 ClearController.show()가 채운다. -->
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="escape.ClearController" alignment="CENTER" spacing="18"
-      maxWidth="-Infinity" maxHeight="-Infinity" prefWidth="520"
+      fx:controller="escape.ClearController" alignment="CENTER" spacing="12"
+      maxWidth="-Infinity" maxHeight="-Infinity" prefWidth="620"
       style="-fx-background-color: #211812; -fx-border-color: #b99451; -fx-border-width: 1;">
     <padding>
-        <Insets top="36" right="40" bottom="36" left="40"/>
+        <Insets top="22" right="36" bottom="22" left="36"/>
     </padding>
-    <Label text="THE INITIATE" style="-fx-text-fill: #d6b46b; -fx-font-size: 15px; -fx-font-weight: bold;"/>
-    <Label text="탈출 성공" style="-fx-text-fill: #f0c060; -fx-font-size: 40px; -fx-font-weight: bold;"/>
-    <Label text="세 개의 열쇠 조각이 하나로 맞춰졌다.&#10;굳게 닫혀 있던 문이 천천히 열리기 시작했다.&#10;&#10;당신은 저택의 시험을 통과했다."
-           textAlignment="CENTER" wrapText="true" style="-fx-text-fill: #efe2cd; -fx-font-size: 16px;"/>
-    <HBox alignment="CENTER" spacing="28">
-        <Label text="열쇠 조각 3/3" style="-fx-text-fill: #d6b46b; -fx-font-size: 15px;"/>
-        <Label text="시험 결과 PASS" style="-fx-text-fill: #d6b46b; -fx-font-size: 15px;"/>
+    <Label fx:id="episodeLabel" text="THE INITIATE" style="-fx-text-fill: #d6b46b; -fx-font-size: 15px; -fx-font-weight: bold;"/>
+    <Label fx:id="titleLabel" text="탈출 성공" style="-fx-text-fill: #f0c060; -fx-font-size: 40px; -fx-font-weight: bold;"/>
+    <Label fx:id="bodyLabel" textAlignment="CENTER" wrapText="true" style="-fx-text-fill: #efe2cd; -fx-font-size: 16px;"/>
+    <VBox fx:id="statsBox" alignment="CENTER" spacing="4"
+          style="-fx-border-color: #5a4630; -fx-border-width: 1 0 1 0; -fx-padding: 10 0 10 0;"/>
+    <Label fx:id="gradeLabel" style="-fx-text-fill: #f0c060; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <HBox alignment="CENTER" spacing="14">
+        <Button text="다시 하기" onAction="#onRetry" styleClass="clue-button"/>
+        <Button text="타이틀로" onAction="#onTitle" styleClass="clue-button"/>
+        <Button text="게임 종료" onAction="#onExit" styleClass="clue-button"/>
     </HBox>
-    <Button text="게임 종료" onAction="#onExit" styleClass="clue-button"/>
 </VBox>

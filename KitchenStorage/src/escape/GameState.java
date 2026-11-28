@@ -146,7 +146,7 @@ public final class GameState {
             case PAINTING_FRAGMENT:
                 return "찢어진 그림 조각";
             default:
-                return itemId;
+                return Episode2.itemName(itemId);
         }
     }
 
@@ -166,7 +166,7 @@ public final class GameState {
             case PAINTING_FRAGMENT:
                 return "현관 액자 뒤에서 떨어진 찢어진 그림 조각. 와인잔과 접시, 수저 일부가 그려져 있다.";
             default:
-                return "특별한 점은 없어 보인다.";
+                return Episode2.itemDescription(itemId);
         }
     }
 
@@ -191,6 +191,14 @@ public final class GameState {
     }
 
     // ================= 퍼즐 =================
+    public int getClearedCount() {
+        return clearedPuzzles.size();
+    }
+
+    public Set<String> getClearedPuzzles() {
+        return Collections.unmodifiableSet(clearedPuzzles);
+    }
+
     public boolean isCleared(String puzzleId) {
         return clearedPuzzles.contains(puzzleId);
     }
@@ -361,6 +369,252 @@ public final class GameState {
         fireChanged();
     }
 
+    // ================= 제한 시간 / 시간 차감 / 게임 오버 =================
+    /** 기본(보통) 제한 시간(초): 60분. 실제 제한 시간은 난이도에 따라 다르다 -> getTimeLimit(). */
+    public static final int TIME_LIMIT_SECONDS = 60 * 60;
+
+    /** 난이도: 제한 시간 / 오답 차감 배율 / 힌트 비용(초, -1이면 힌트 불가). */
+    public enum Difficulty {
+        EASY("쉬움", 90 * 60, 0, 0, "제한시간 90분 · 오답 차감 없음 · 힌트 무료"),
+        NORMAL("보통", 60 * 60, 1, 120, "제한시간 60분 · 오답 시 30초~1분 차감 · 힌트 1회당 2분"),
+        HARD("어려움", 40 * 60, 2, -1, "제한시간 40분 · 오답 차감 2배 · 힌트 사용 불가");
+
+        public final String label;
+        public final int timeLimit;
+        public final int penaltyMultiplier;
+        public final int hintCost;
+        public final String description;
+
+        Difficulty(String label, int timeLimit, int penaltyMultiplier, int hintCost, String description) {
+            this.label = label;
+            this.timeLimit = timeLimit;
+            this.penaltyMultiplier = penaltyMultiplier;
+            this.hintCost = hintCost;
+            this.description = description;
+        }
+    }
+
+    private Difficulty difficulty = Difficulty.NORMAL;
+    /** 지금 플레이 중인 에피소드 (1: 저택, 2: 등대). */
+    private int episode = 1;
+    /** 에피소드 2 등에서 쓰는 단순 진행 표시(문 열림, 전원 등). */
+    private final Set<String> flags = new LinkedHashSet<>();
+    /** 에피소드 2 마지막 선택 (Episode2.ENDING_OFF / ENDING_ON). 없으면 null. */
+    private String ending;
+    private boolean fuseTaken;
+    private String currentRoom;
+    private final Set<String> visitedRooms = new LinkedHashSet<>();
+    private int hintsUsed;
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public int getTimeLimit() {
+        return difficulty.timeLimit;
+    }
+
+    // ---- 에피소드 / 진행 표시 / 엔딩 선택 ----
+    public int getEpisode() {
+        return episode;
+    }
+
+    public boolean hasFlag(String flag) {
+        return flags.contains(flag);
+    }
+
+    public void setFlag(String flag) {
+        if (flags.add(flag)) {
+            fireChanged();
+        }
+    }
+
+    public Set<String> getFlags() {
+        return Collections.unmodifiableSet(flags);
+    }
+
+    public String getEnding() {
+        return ending;
+    }
+
+    /** 에피소드 2: 마지막 선택으로 게임을 끝낸다. */
+    public boolean finishWithEnding(String choice) {
+        if (gameCleared || gameOver) {
+            return false;
+        }
+        ending = choice;
+        gameCleared = true;
+        fireChanged();
+        return true;
+    }
+
+    // ---- 주방 수납장 퓨즈(패널에 끼우면 인벤토리에서 사라지므로 따로 기억) ----
+    public boolean isFuseTaken() {
+        return fuseTaken;
+    }
+
+    public void takeFuse() {
+        if (!fuseTaken) {
+            fuseTaken = true;
+            inventory.add(FUSE);
+            fireChanged();
+        }
+    }
+
+    // ---- 현재 방 / 방문한 방 (미니맵, 이어하기) ----
+    public String getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void enterRoom(String roomId) {
+        currentRoom = roomId;
+        visitedRooms.add(roomId);
+    }
+
+    public boolean isVisited(String roomId) {
+        return visitedRooms.contains(roomId);
+    }
+
+    public Set<String> getVisitedRooms() {
+        return Collections.unmodifiableSet(visitedRooms);
+    }
+
+    // ---- 힌트 ----
+    public int getHintsUsed() {
+        return hintsUsed;
+    }
+
+    /** 힌트 사용: 난이도에 따른 시간 차감. 사용할 수 없으면 false. */
+    public boolean useHint() {
+        if (!isPlaying() || difficulty.hintCost < 0) {
+            return false;
+        }
+        hintsUsed++;
+        int cut = Math.min(difficulty.hintCost, remainingSeconds);
+        remainingSeconds -= cut;
+        if (remainingSeconds == 0) {
+            gameOver = true;
+        }
+        fireChanged();
+        return true;
+    }
+    /** 행동별 시간 차감(초). */
+    public static final int PENALTY_SMALL = 30;
+    public static final int PENALTY_BIG = 60;
+
+    private int remainingSeconds = TIME_LIMIT_SECONDS;
+    private int penaltySeconds;
+    private int penaltyCount;
+    private boolean gameOver;
+    private java.util.function.BiConsumer<Integer, String> penaltyListener;
+
+    public int getRemainingSeconds() {
+        return remainingSeconds;
+    }
+
+    public int getPenaltySeconds() {
+        return penaltySeconds;
+    }
+
+    public int getPenaltyCount() {
+        return penaltyCount;
+    }
+
+    /** 실제로 흐른 시간 + 차감된 시간 = 제한 시간에서 소모한 시간. */
+    public int getUsedSeconds() {
+        return getTimeLimit() - remainingSeconds;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public boolean isPlaying() {
+        return !gameOver && !gameCleared;
+    }
+
+    /** 차감이 일어날 때 HUD에 알리기 위한 리스너 (초, 이유). */
+    public void setPenaltyListener(java.util.function.BiConsumer<Integer, String> listener) {
+        this.penaltyListener = listener;
+    }
+
+    /** 1초 경과. 일반 리스너는 부르지 않는다(타이머는 MainController가 직접 갱신). */
+    public void tick() {
+        if (!isPlaying()) {
+            return;
+        }
+        remainingSeconds = Math.max(0, remainingSeconds - 1);
+        if (remainingSeconds == 0) {
+            gameOver = true;
+            fireChanged();
+        }
+    }
+
+    /** 잘못된 시도 등 행동에 따른 시간 차감. */
+    public void penalize(int seconds, String reason) {
+        if (!isPlaying()) {
+            return;
+        }
+        seconds *= difficulty.penaltyMultiplier;
+        if (seconds <= 0) {
+            if (penaltyListener != null) {
+                penaltyListener.accept(0, reason);
+            }
+            return;
+        }
+        int cut = Math.min(seconds, remainingSeconds);
+        remainingSeconds -= cut;
+        penaltySeconds += cut;
+        penaltyCount++;
+        if (penaltyListener != null) {
+            penaltyListener.accept(seconds, reason);
+        }
+        if (remainingSeconds == 0) {
+            gameOver = true;
+            fireChanged();
+        }
+    }
+
+    /** 새 게임: 모든 진행 상황과 리스너를 초기화한다. (다시하기 / 타이틀로) */
+    public void reset() {
+        reset(Difficulty.NORMAL);
+    }
+
+    /** 같은 에피소드로 새 게임. */
+    public void reset(Difficulty newDifficulty) {
+        reset(newDifficulty, episode);
+    }
+
+    public void reset(Difficulty newDifficulty, int newEpisode) {
+        difficulty = newDifficulty;
+        episode = newEpisode;
+        flags.clear();
+        ending = null;
+        fuseTaken = false;
+        currentRoom = null;
+        visitedRooms.clear();
+        hintsUsed = 0;
+        inventory.clear();
+        clearedPuzzles.clear();
+        clues.clear();
+        listeners.clear();
+        penaltyListener = null;
+        fridgeUnlocked = false;
+        panelPowered = false;
+        paintingRestored = false;
+        gameCleared = false;
+        gameOver = false;
+        keyFragments = 0;
+        selectedItem = null;
+        remainingSeconds = newDifficulty.timeLimit;
+        penaltySeconds = 0;
+        penaltyCount = 0;
+    }
+
+    public static String formatTime(int seconds) {
+        return String.format("%02d:%02d", seconds / 60, seconds % 60);
+    }
+
     // ================= 최종 탈출 / 게임 클리어 =================
     public boolean isGameCleared() {
         return gameCleared;
@@ -371,11 +625,70 @@ public final class GameState {
      * @return 이번 호출에서 새로 클리어되었으면 true
      */
     public boolean clearGame() {
-        if (gameCleared || keyFragments < TOTAL_KEY_FRAGMENTS) {
+        if (gameCleared || gameOver || keyFragments < TOTAL_KEY_FRAGMENTS) {
             return false;
         }
         gameCleared = true;
         fireChanged();
         return true;
+    }
+
+    // ================= 저장 / 불러오기 (파일 입출력은 SaveManager 담당) =================
+    void writeTo(java.util.Properties p) {
+        p.setProperty("difficulty", difficulty.name());
+        p.setProperty("episode", Integer.toString(episode));
+        p.setProperty("flags", String.join(",", flags));
+        p.setProperty("remainingSeconds", Integer.toString(remainingSeconds));
+        p.setProperty("penaltySeconds", Integer.toString(penaltySeconds));
+        p.setProperty("penaltyCount", Integer.toString(penaltyCount));
+        p.setProperty("hintsUsed", Integer.toString(hintsUsed));
+        p.setProperty("keyFragments", Integer.toString(keyFragments));
+        p.setProperty("fridgeUnlocked", Boolean.toString(fridgeUnlocked));
+        p.setProperty("panelPowered", Boolean.toString(panelPowered));
+        p.setProperty("paintingRestored", Boolean.toString(paintingRestored));
+        p.setProperty("fuseTaken", Boolean.toString(fuseTaken));
+        p.setProperty("currentRoom", currentRoom == null ? "" : currentRoom);
+        p.setProperty("inventory", String.join(",", inventory));
+        p.setProperty("cleared", String.join(",", clearedPuzzles));
+        p.setProperty("visited", String.join(",", visitedRooms));
+        p.setProperty("clueCount", Integer.toString(clues.size()));
+        for (int i = 0; i < clues.size(); i++) {
+            p.setProperty("clue." + i, clues.get(i));
+        }
+    }
+
+    void readFrom(java.util.Properties p) {
+        reset(Difficulty.valueOf(p.getProperty("difficulty", "NORMAL")),
+                Integer.parseInt(p.getProperty("episode", "1")));
+        splitInto(p.getProperty("flags", ""), flags);
+        remainingSeconds = Integer.parseInt(p.getProperty("remainingSeconds", Integer.toString(getTimeLimit())));
+        penaltySeconds = Integer.parseInt(p.getProperty("penaltySeconds", "0"));
+        penaltyCount = Integer.parseInt(p.getProperty("penaltyCount", "0"));
+        hintsUsed = Integer.parseInt(p.getProperty("hintsUsed", "0"));
+        keyFragments = Integer.parseInt(p.getProperty("keyFragments", "0"));
+        fridgeUnlocked = Boolean.parseBoolean(p.getProperty("fridgeUnlocked"));
+        panelPowered = Boolean.parseBoolean(p.getProperty("panelPowered"));
+        paintingRestored = Boolean.parseBoolean(p.getProperty("paintingRestored"));
+        fuseTaken = Boolean.parseBoolean(p.getProperty("fuseTaken"));
+        String room = p.getProperty("currentRoom", "");
+        currentRoom = room.isEmpty() ? null : room;
+        splitInto(p.getProperty("inventory", ""), inventory);
+        splitInto(p.getProperty("cleared", ""), clearedPuzzles);
+        splitInto(p.getProperty("visited", ""), visitedRooms);
+        int n = Integer.parseInt(p.getProperty("clueCount", "0"));
+        for (int i = 0; i < n; i++) {
+            String c = p.getProperty("clue." + i);
+            if (c != null) {
+                clues.add(c);
+            }
+        }
+    }
+
+    private static void splitInto(String csv, Set<String> target) {
+        for (String part : csv.split(",")) {
+            if (!part.isBlank()) {
+                target.add(part.trim());
+            }
+        }
     }
 }
