@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -67,12 +68,15 @@ public class InventoryBar extends HBox {
         if (state.isSelected(itemId)) {
             slot.getStyleClass().add("inv-selected");
         }
-        Tooltip.install(slot, new Tooltip(GameState.displayName(itemId) + "\n클릭: 들기 / 더블클릭·우클릭: 살펴보기"));
+        boolean canSelect = !GameState.KEY_FRAGMENT_3.equals(itemId);
+        String interaction = canSelect ? "\n클릭: 들기 / 더블클릭·우클릭: 살펴보기"
+                : "\n더블클릭·우클릭: 살펴보기";
+        Tooltip.install(slot, new Tooltip(GameState.displayName(itemId) + interaction));
 
         slot.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.SECONDARY || e.getClickCount() == 2) {
                 examine(itemId);
-            } else if (e.getButton() == MouseButton.PRIMARY) {
+            } else if (canSelect && e.getButton() == MouseButton.PRIMARY) {
                 state.toggleSelect(itemId);
                 host.showMessage(state.isSelected(itemId)
                         ? "[" + GameState.displayName(itemId) + "]을(를) 손에 들었다. 사용할 곳을 클릭하자."
@@ -106,6 +110,10 @@ public class InventoryBar extends HBox {
             return text;
         }
         ImageView view = new ImageView(img);
+        if (GameState.KEY_FRAGMENT_3.equals(itemId)) {
+            // 실제 알파 경계 (640, 199)–(1542, 569)에 여백을 둔다.
+            view.setViewport(new Rectangle2D(620, 179, 943, 411));
+        }
         view.setFitWidth(size);
         view.setFitHeight(size);
         view.setPreserveRatio(true);

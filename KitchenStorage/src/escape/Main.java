@@ -1,8 +1,9 @@
 package escape;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -13,18 +14,36 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("MainView.fxml"));
-        Parent root = loader.load();
+    private Region gameRoot;
 
-        StackPane frame = wrapScalable((Region) root);
+    @Override
+    public void start(Stage stage) {
+        MenuScreens menu = new MenuScreens(stage);
+        StackPane frame = wrapScalable(menu.root());
         Scene scene = new Scene(frame);
         scene.getStylesheets().add(Main.class.getResource("game.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("menu.css").toExternalForm());
+        menu.setOnStart(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("MainView.fxml"));
+                gameRoot = loader.load();
+                scene.setRoot(wrapScalable(gameRoot));
+                menu.stopFog();
+            } catch (IOException e) {
+                System.getLogger(Main.class.getName()).log(System.Logger.Level.ERROR,
+                        "게임 화면을 불러오지 못했습니다.", e);
+                menu.showLoadFailure();
+            }
+        });
 
         // F11 또는 Alt+Enter: 전체화면 전환 (ESC 로도 빠져나올 수 있다)
         scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
-            if (e.getCode() == KeyCode.F11 || (e.getCode() == KeyCode.ENTER && e.isAltDown())) {
+            if (e.getCode() == KeyCode.F9 && gameRoot != null) {
+                if (!gameRoot.getStyleClass().remove("show-hitboxes")) {
+                    gameRoot.getStyleClass().add("show-hitboxes");
+                }
+                e.consume();
+            } else if (e.getCode() == KeyCode.F11 || (e.getCode() == KeyCode.ENTER && e.isAltDown())) {
                 toggleFullScreen(stage);
                 e.consume();
             }
@@ -32,12 +51,13 @@ public class Main extends Application {
         stage.setFullScreenExitHint("ESC 또는 F11: 창 모드로 돌아가기");
         stage.setFullScreenExitKeyCombination(KeyCombination.keyCombination("ESC"));
 
-        stage.setTitle("저택 탈출 - 주방 / 지하 저장고");
+        stage.setTitle("MYSTERY STORY");
         stage.setScene(scene);
         stage.setResizable(true);
-        stage.show();
         stage.setMinWidth(640);
         stage.setMinHeight(440);
+        MenuScreens.WindowSize.NORMAL.apply(stage);
+        stage.show();
     }
 
     public static void toggleFullScreen(Stage stage) {

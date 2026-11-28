@@ -9,9 +9,10 @@ import javafx.scene.Node;
 public interface GameHost {
     String KITCHEN = "KITCHEN";
     String STORAGE = "STORAGE";
-    /** 팀원 담당 방(식당). 통합 전에는 "아직 연결되지 않은 방" 메시지만 나온다. */
     String DINING = "DINING";
     String ENTRANCE = "ENTRANCE";
+    String BEDROOM = "BEDROOM";
+    String STUDY = "STUDY";
 
     /** 방 전환. */
     void goTo(String roomId);

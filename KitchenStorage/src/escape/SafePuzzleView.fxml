@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.SafePuzzleController" alignment="CENTER" spacing="8">
+    <Pane styleClass="safe-board" minWidth="720" prefWidth="720" maxWidth="720"
+          minHeight="405" prefHeight="405" maxHeight="405">
+        <ImageView fx:id="safeImage" fitWidth="720" fitHeight="405"
+                   preserveRatio="true" mouseTransparent="true"/>
+        <Button fx:id="firstDial" text="0" accessibleText="숫자판 1, 현재 0" styleClass="safe-dial"
+                layoutX="324.5" layoutY="164" prefWidth="30" prefHeight="63" onAction="#onTurnDial">
+            <tooltip><Tooltip text="숫자판 1"/></tooltip>
+        </Button>
+        <Button fx:id="secondDial" text="0" accessibleText="숫자판 2, 현재 0" styleClass="safe-dial"
+                layoutX="370" layoutY="164" prefWidth="30" prefHeight="63" onAction="#onTurnDial">
+            <tooltip><Tooltip text="숫자판 2"/></tooltip>
+        </Button>
+        <Button fx:id="thirdDial" text="0" accessibleText="숫자판 3, 현재 0" styleClass="safe-dial"
+                layoutX="415.5" layoutY="164" prefWidth="30" prefHeight="63" onAction="#onTurnDial">
+            <tooltip><Tooltip text="숫자판 3"/></tooltip>
+        </Button>
+        <Button fx:id="fourthDial" text="0" accessibleText="숫자판 4, 현재 0" styleClass="safe-dial"
+                layoutX="461" layoutY="164" prefWidth="30" prefHeight="63" onAction="#onTurnDial">
+            <tooltip><Tooltip text="숫자판 4"/></tooltip>
+        </Button>
+        <Button fx:id="handle" accessibleText="금고 열기" styleClass="safe-handle"
+                layoutX="171.5" layoutY="139.5" prefWidth="90" prefHeight="161"
+                pickOnBounds="false" onAction="#onTryHandle">
+            <tooltip><Tooltip text="금고 열기"/></tooltip>
+        </Button>
+    </Pane>
+    <Label styleClass="puzzle-text" text="숫자판을 눌러 번호를 맞춘 뒤 손잡이를 돌려 보자."/>
+    <Label fx:id="result" styleClass="puzzle-text" minHeight="20"/>
+</VBox>

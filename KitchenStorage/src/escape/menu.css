@@ -1,0 +1,96 @@
+.mystery-menu {
+    -fx-background-color: #211914;
+}
+
+.mystery-menu .title-button {
+    -fx-background-color: rgba(43, 33, 27, 0.94);
+    -fx-background-insets: 0;
+    -fx-background-radius: 3;
+    -fx-border-color: #9e805a;
+    -fx-border-radius: 3;
+    -fx-text-fill: #e2c9a3;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.mystery-menu .title-button:hover, .mystery-menu .title-button:focused {
+    -fx-background-color: #63452b;
+    -fx-border-color: #e1bb7f;
+}
+
+.mystery-menu .title-button:pressed {
+    -fx-background-color: #3a291d;
+}
+
+.mystery-menu .episode-heading, .mystery-menu .menu-dialog-title {
+    -fx-text-fill: #ead8be;
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;
+}
+
+.mystery-menu .episode-card {
+    -fx-background-color: rgba(38, 26, 22, 0.95);
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+    -fx-border-color: #b69770;
+    -fx-border-radius: 4;
+    -fx-padding: 8;
+    -fx-cursor: hand;
+}
+
+.mystery-menu .episode-locked {
+    -fx-background-color: rgba(27, 21, 19, 0.94);
+    -fx-border-color: #78604f;
+}
+
+.mystery-menu .episode-card:hover, .mystery-menu .episode-card:focused {
+    -fx-background-color: #483126;
+    -fx-border-color: #e1bb7f;
+    -fx-effect: dropshadow(gaussian, rgba(228, 165, 103, 0.45), 9, 0.15, 0, 0);
+}
+
+.mystery-menu .episode-card:pressed {
+    -fx-background-color: #30231b;
+}
+
+.mystery-menu .button:disabled {
+    -fx-opacity: 1;
+}
+
+.mystery-menu .episode-number, .mystery-menu .episode-status {
+    -fx-text-fill: #d2b48d;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.mystery-menu .episode-name, .mystery-menu .episode-question {
+    -fx-font-family: "Georgia";
+    -fx-text-fill: #f4e0bf;
+    -fx-font-weight: bold;
+    -fx-font-size: 19px;
+}
+
+.mystery-menu .episode-question {
+    -fx-text-fill: #a38469;
+    -fx-font-size: 65px;
+}
+
+.mystery-menu .episode-detail, .mystery-menu .menu-dialog-text {
+    -fx-text-fill: #f0dfc6;
+    -fx-font-size: 15px;
+}
+
+.mystery-menu .menu-dialog-text {
+    -fx-line-spacing: 3;
+}
+
+.mystery-menu .menu-shade {
+    -fx-background-color: rgba(10, 6, 4, 0.68);
+}
+
+.mystery-menu .menu-dialog {
+    -fx-background-color: #2b211b;
+    -fx-border-color: #9e805a;
+    -fx-padding: 20;
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.StudyController" styleClass="upper-room"
+      minWidth="960" prefWidth="960" maxWidth="960"
+      minHeight="540" prefHeight="540" maxHeight="540">
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+    <Label text="서재" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <Button text="타로 설명 책" styleClass="hotspot" layoutX="414" layoutY="166"
+            prefWidth="57" prefHeight="57" wrapText="true" onAction="#onBookshelf"/>
+    <Button text="금고" styleClass="hotspot" layoutX="761" layoutY="257"
+            prefWidth="105" prefHeight="92" onAction="#onSafe"/>
+    <Button text="침실" styleClass="hotspot" layoutX="14" layoutY="94"
+            prefWidth="111" prefHeight="398" onAction="#goToBedroom"/>
+</Pane>

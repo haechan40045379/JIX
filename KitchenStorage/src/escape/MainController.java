@@ -59,18 +59,22 @@ public class MainController implements GameHost {
         rooms.put(STORAGE, loadRoom("StorageView.fxml"));
         rooms.put(DINING, loadRoom("DiningView.fxml"));
         rooms.put(ENTRANCE, loadRoom("EntranceView.fxml"));
+        rooms.put(BEDROOM, loadRoom("BedroomView.fxml"));
+        rooms.put(STUDY, loadRoom("StudyView.fxml"));
         roomNames.put(KITCHEN, "주방");
         roomNames.put(STORAGE, "지하 저장고");
         roomNames.put(DINING, "식당");
         roomNames.put(ENTRANCE, "현관 홀");
+        roomNames.put(BEDROOM, "침실");
+        roomNames.put(STUDY, "서재");
 
         inventoryBox.getChildren().setAll(new InventoryBar(state, this));
         fullScreenButton.setTooltip(new Tooltip("전체화면 (F11)"));
         watchFullScreen();
         state.addListener(this::refreshGameView);
         refreshGameView();
-        goTo(KITCHEN);
-        showMessage("어두운 주방이다. 낡은 냉장고가 눈에 띈다.");
+        goTo(BEDROOM);
+        showMessage("낯선 침실에서 눈을 떴다. 대체 이곳은 어디지...?");
     }
 
     private void refreshGameView() {

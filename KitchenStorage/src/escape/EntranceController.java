@@ -109,6 +109,12 @@ public class EntranceController implements RoomController {
         host.showMessage("왼쪽 문을 통해 식당으로 이동했다.");
     }
 
+    @FXML
+    private void goToBedroom() {
+        host.goTo(GameHost.BEDROOM);
+        host.showMessage("계단을 올라 2층 침실에 들어섰다.");
+    }
+
     private void showPaper(String title, String captionText, String body) {
         Label paper = new Label("\"" + body + "\"");
         paper.getStyleClass().add("note-paper");

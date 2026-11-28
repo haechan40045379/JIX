@@ -2,6 +2,100 @@
     -fx-font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
 }
 
+.room-arrow {
+    -fx-background-color: rgba(42, 30, 22, 0.78);
+    -fx-background-radius: 8;
+    -fx-border-color: rgba(214, 180, 107, 0.76);
+    -fx-border-radius: 8;
+    -fx-text-fill: #ead6a6;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.room-arrow:hover, .room-arrow:focused {
+    -fx-background-color: rgba(88, 62, 34, 0.92);
+    -fx-border-color: #f0c060;
+}
+
+.tarot-card {
+    -fx-background-color: #35291f;
+    -fx-background-radius: 7;
+    -fx-border-color: #786243;
+    -fx-border-radius: 7;
+    -fx-padding: 6;
+    -fx-graphic-text-gap: 5;
+    -fx-text-fill: #f3e6c4;
+    -fx-font-size: 15px;
+    -fx-cursor: hand;
+}
+
+.tarot-card:hover, .tarot-card:focused, .tarot-card:disabled {
+    -fx-background-color: #4b3827;
+    -fx-border-color: #e2b75f;
+}
+
+.tarot-card:disabled {
+    -fx-opacity: 1;
+}
+
+.tarot-rank {
+    -fx-background-color: #e2b75f;
+    -fx-background-radius: 10;
+    -fx-text-fill: #23170c;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-min-width: 22;
+    -fx-min-height: 22;
+}
+
+.safe-board {
+    -fx-background-color: #443427;
+}
+
+.safe-dial {
+    -fx-background-color: linear-gradient(to bottom, #493a2b, #8c7151 15%, #c7a77d 27%, #b69771 66%, #896b4e 88%, #514032);
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-font-family: "Arial", sans-serif;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #35271b;
+    -fx-cursor: hand;
+}
+
+.safe-dial:hover, .safe-dial:focused {
+    -fx-border-color: #daba79;
+}
+
+.safe-handle {
+    -fx-shape: "M 31 86 C 13 81 0 64 0 44 C 0 20 20 0 45 0 C 70 0 90 20 90 44 C 90 64 77 81 59 86 L 63 143 C 64 154 57 161 45 161 C 33 161 26 154 27 143 Z";
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.safe-handle:hover, .safe-handle:focused {
+    -fx-background-color: rgba(230, 188, 106, 0.18);
+}
+
+.show-hitboxes .upper-room .hotspot,
+.show-hitboxes .upper-room .room-arrow,
+.show-hitboxes .safe-handle {
+    -fx-background-color: rgba(220, 35, 35, 0.30);
+    -fx-border-color: #ff4848;
+    -fx-text-fill: #fff5ed;
+}
+
+.show-hitboxes .safe-dial {
+    -fx-background-color: linear-gradient(to bottom, #674031, #d99171 30%, #c47d60 65%, #774332);
+    -fx-border-color: #ff4848;
+}
+
 /* 방 안의 클릭 지점. 배경 이미지를 붙인 뒤에는 -fx-background-color를 transparent로,
    border-color를 transparent로 바꾸면 이미지 위 투명 클릭 영역이 된다. */
 .hotspot {
@@ -31,6 +125,11 @@
     -fx-border-color: rgba(255, 240, 200, 0.85);
     -fx-text-fill: white;
     -fx-effect: dropshadow(gaussian, black, 4, 0.8, 0, 0);
+}
+
+.upper-room .hotspot {
+    -fx-padding: 2;
+    -fx-font-size: 13px;
 }
 
 /* 배경 이미지 위에서는 방 이름이 잘 보이도록 그림자 */

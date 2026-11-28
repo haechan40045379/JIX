@@ -17,6 +17,7 @@ public final class GameState {
     public static final String FRIDGE_KEY = "FRIDGE_KEY";
     public static final String KEY_FRAGMENT_1 = "KEY_FRAGMENT_1";
     public static final String KEY_FRAGMENT_2 = "KEY_FRAGMENT_2";
+    public static final String KEY_FRAGMENT_3 = "KEY_FRAGMENT_3";
     public static final String FUSE = "FUSE";
     public static final String PAINTING_FRAGMENT = "PAINTING_FRAGMENT";
 
@@ -40,6 +41,8 @@ public final class GameState {
     public static final String PUZZLE_SHAPE = "PUZZLE_SHAPE";
     public static final String PUZZLE_FRAME = "PUZZLE_FRAME";
     public static final String PUZZLE_DINING_TABLE = "PUZZLE_DINING_TABLE";
+    public static final String PUZZLE_TAROT = "PUZZLE_TAROT";
+    public static final String PUZZLE_SAFE = "PUZZLE_SAFE";
 
     public static final int TOTAL_KEY_FRAGMENTS = 3;
 
@@ -136,6 +139,8 @@ public final class GameState {
                 return "탈출 열쇠 조각 1";
             case KEY_FRAGMENT_2:
                 return "탈출 열쇠 조각 2";
+            case KEY_FRAGMENT_3:
+                return "탈출 열쇠 조각 3";
             case FUSE:
                 return "낡은 퓨즈";
             case PAINTING_FRAGMENT:
@@ -154,6 +159,8 @@ public final class GameState {
                 return "화려한 장식이 달린 열쇠의 머리 부분. 날 쪽이 부러져 있다. 나머지 조각도 저택 어딘가에 있을 것이다.";
             case KEY_FRAGMENT_2:
                 return "식당 식탁 아래 숨겨진 장치에서 나온 낡은 열쇠 기둥 조각. 양끝이 부러져 있으며 다른 조각과 맞물릴 것 같다.";
+            case KEY_FRAGMENT_3:
+                return "서재 금고에서 발견한 열쇠의 날 부분. 다른 조각과 맞물릴 것 같다.";
             case FUSE:
                 return "도자기 몸통 양 끝에 금속 뚜껑이 달린 낡은 퓨즈. 먼지투성이지만 끊어지지는 않았다.";
             case PAINTING_FRAGMENT:
@@ -172,6 +179,8 @@ public final class GameState {
                 return "key_fragment_1.png";
             case KEY_FRAGMENT_2:
                 return "key_fragment_2.png";
+            case KEY_FRAGMENT_3:
+                return "key_fragment_3.png";
             case FUSE:
                 return "fuse.png";
             case PAINTING_FRAGMENT:
@@ -300,6 +309,17 @@ public final class GameState {
         clearedPuzzles.add(PUZZLE_DINING_TABLE);
         inventory.add(KEY_FRAGMENT_2);
         keyFragments = Math.min(TOTAL_KEY_FRAGMENTS, keyFragments + 1);
+        fireChanged();
+    }
+
+    /** 서재 금고를 열고 최종 탈출 열쇠 조각 3을 한 번만 지급한다. */
+    public void clearSafePuzzle() {
+        if (!clearedPuzzles.add(PUZZLE_SAFE)) {
+            return;
+        }
+        if (inventory.add(KEY_FRAGMENT_3)) {
+            keyFragments = Math.min(TOTAL_KEY_FRAGMENTS, keyFragments + 1);
+        }
         fireChanged();
     }
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.BedroomController" styleClass="upper-room"
+      minWidth="960" prefWidth="960" maxWidth="960"
+      minHeight="540" prefHeight="540" maxHeight="540">
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+    <Label text="침실" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <Button text="광대" styleClass="hotspot" layoutX="222" layoutY="140"
+            prefWidth="99" prefHeight="153" onAction="#onPainting"/>
+    <Button text="마법사" styleClass="hotspot" layoutX="332" layoutY="140"
+            prefWidth="97" prefHeight="153" onAction="#onPainting"/>
+    <Button text="은둔자" styleClass="hotspot" layoutX="439" layoutY="140"
+            prefWidth="97" prefHeight="153" onAction="#onPainting"/>
+    <Button text="죽음" styleClass="hotspot" layoutX="547" layoutY="140"
+            prefWidth="97" prefHeight="153" onAction="#onPainting"/>
+    <Button text="세계" styleClass="hotspot" layoutX="656" layoutY="140"
+            prefWidth="97" prefHeight="153" onAction="#onPainting"/>
+    <Button text="원형 탁자 · 쪽지" styleClass="hotspot" layoutX="405" layoutY="356"
+            prefWidth="205" prefHeight="58" onAction="#onTable"/>
+    <Button text="서재" styleClass="hotspot" layoutX="813" layoutY="131"
+            prefWidth="85" prefHeight="169" onAction="#goToStudy"/>
+    <Button text="서재" styleClass="hotspot" layoutX="813" layoutY="300"
+            prefWidth="45" prefHeight="99" onAction="#goToStudy"/>
+
+    <Button text="↓" accessibleText="현관 홀로 이동" styleClass="room-arrow"
+            layoutX="449" layoutY="511" prefWidth="62" prefHeight="28" onAction="#goToEntrance">
+        <tooltip><Tooltip text="현관 홀로 이동"/></tooltip>
+    </Button>
+</Pane>
