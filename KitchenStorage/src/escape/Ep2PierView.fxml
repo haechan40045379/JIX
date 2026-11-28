@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!-- 에피소드 2 선착장 (960 x 540). 좌표는 res/images/ep2_pier_bg.png 기준. -->
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.Ep2PierController" styleClass="upper-room"
+      minWidth="960" prefWidth="960" maxWidth="960"
+      minHeight="540" prefHeight="540" maxHeight="540">
+    <Rectangle width="960" height="540" fill="#2a2e33"/>
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+    <Label text="선착장" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <Button text="호수" styleClass="hotspot" layoutX="0" layoutY="150" prefWidth="160" prefHeight="150"
+            userData="검은 호수. 안개 너머로 저택의 불빛이 희미하게 보인다. 헤엄쳐 돌아가기엔 너무 멀다."
+            onAction="#onLake"/>
+    <Button text="보트" styleClass="hotspot" layoutX="10" layoutY="318" prefWidth="195" prefHeight="125"
+            userData="밧줄이 칼로 자른 듯 깨끗하게 끊겨 있다. 보트는 물살에 조금씩 멀어진다."
+            onAction="#onBoat"/>
+    <Button fx:id="signalButton" text="신호등" styleClass="hotspot" layoutX="163" layoutY="82"
+            prefWidth="78" prefHeight="98" onAction="#onSignal"/>
+    <Button text="기둥" styleClass="hotspot" layoutX="252" layoutY="185" prefWidth="40" prefHeight="210"
+            onAction="#onPost"/>
+    <Button text="오두막 창문" styleClass="hotspot" layoutX="425" layoutY="188" prefWidth="92" prefHeight="95"
+            userData="창 안쪽, 책상 위에 일지 한 권이 펼쳐져 있다. 문으로 들어가면 읽을 수 있을 것 같다."
+            onAction="#onFlavor"/>
+    <Button text="선원 수첩" styleClass="hotspot" layoutX="527" layoutY="224" prefWidth="56" prefHeight="64"
+            onAction="#onNotebook"/>
+    <Button text="오두막 문" styleClass="hotspot" layoutX="603" layoutY="198" prefWidth="95" prefHeight="200"
+            userData="DOC:1" onAction="#onFlavor"/>
+    <Button fx:id="crateButton" text="어구 상자" styleClass="hotspot" layoutX="337" layoutY="296"
+            prefWidth="128" prefHeight="122" onAction="#onCrate"/>
+    <Button fx:id="anchorButton" text="닻" styleClass="hotspot" layoutX="482" layoutY="300"
+            prefWidth="90" prefHeight="112" onAction="#onAnchor"/>
+    <Button fx:id="doorButton" text="등대 철문" styleClass="hotspot" layoutX="773" layoutY="140"
+            prefWidth="145" prefHeight="275" onAction="#onIronDoor"/>
+</Pane>

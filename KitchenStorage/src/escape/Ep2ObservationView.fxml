@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!-- 에피소드 2 등대 2층 관찰실 (960 x 540). 전원이 들어오면 ep2_observation_bg_on.png 로 바뀐다. -->
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.Ep2ObservationController" styleClass="upper-room"
+      minWidth="960" prefWidth="960" maxWidth="960"
+      minHeight="540" prefHeight="540" maxHeight="540">
+    <Rectangle width="960" height="540" fill="#1c1f26"/>
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+    <!-- 전원이 없을 때 방을 어둡게 -->
+    <Rectangle fx:id="darkness" width="960" height="540" fill="#04060c" opacity="0.45" mouseTransparent="true"/>
+    <Label text="2층 관찰실" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <Button fx:id="boardButton" text="배전반" styleClass="hotspot" layoutX="80" layoutY="145"
+            prefWidth="138" prefHeight="178" onAction="#onBoard"/>
+    <Button fx:id="monitorButton" text="모니터" styleClass="hotspot" layoutX="265" layoutY="128"
+            prefWidth="368" prefHeight="200" onAction="#onMonitors"/>
+    <Button text="콘솔" styleClass="hotspot" layoutX="312" layoutY="330" prefWidth="300" prefHeight="42"
+            onAction="#onConsole"/>
+    <Button text="메모" styleClass="hotspot" layoutX="238" layoutY="356" prefWidth="72" prefHeight="26"
+            onAction="#onMemo"/>
+    <Button text="녹음기" styleClass="hotspot" layoutX="618" layoutY="285" prefWidth="98" prefHeight="82"
+            userData="DOC:4" onAction="#onFlavor"/>
+    <Button text="기록철" styleClass="hotspot" layoutX="228" layoutY="288" prefWidth="40" prefHeight="70"
+            userData="감시 기록철. 마지막 장: '참가자 13 - 저택 도착, 수면 상태.' 날짜는 오늘이다."
+            onAction="#onFlavor"/>
+    <Button text="둥근 창" styleClass="hotspot" layoutX="660" layoutY="118" prefWidth="148" prefHeight="150"
+            userData="창밖으로 호수 건너편 저택이 보인다. 저 창문들 하나하나가 이 모니터로 이어져 있었을까."
+            onAction="#onFlavor"/>
+    <Button text="나무 상자" styleClass="hotspot" layoutX="25" layoutY="380" prefWidth="120" prefHeight="105"
+            userData="상자 안에 빈 테이프 릴이 잔뜩 쌓여 있다. 라벨에는 아직 아무것도 적혀 있지 않다."
+            onAction="#onFlavor"/>
+    <Button text="위층 계단" styleClass="hotspot" layoutX="790" layoutY="0" prefWidth="170" prefHeight="190"
+            onAction="#goUp"/>
+    <Button text="아래층 계단" styleClass="hotspot" layoutX="770" layoutY="320" prefWidth="190" prefHeight="180"
+            onAction="#goDown"/>
+</Pane>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!-- 에피소드 2 꼭대기 등실 (960 x 540). 좌표는 ep2_lantern_bg.png 기준. -->
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.Ep2LanternController" styleClass="upper-room"
+      minWidth="960" prefWidth="960" maxWidth="960"
+      minHeight="540" prefHeight="540" maxHeight="540">
+    <Rectangle width="960" height="540" fill="#1a2230"/>
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+    <Label text="꼭대기 등실" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <Button text="거대한 렌즈" styleClass="hotspot" layoutX="365" layoutY="95" prefWidth="230" prefHeight="355"
+            onAction="#onLens"/>
+    <Button text="레버 상자" styleClass="hotspot" layoutX="88" layoutY="255" prefWidth="135" prefHeight="215"
+            userData="녹슨 수동 레버. 당겨도 꿈쩍하지 않는다. 옆에 새겨진 글씨: '빛의 길은 바닥의 거울이 정한다.'"
+            onAction="#onFlavor"/>
+    <Button text="의자 위 편지" styleClass="hotspot" layoutX="762" layoutY="280" prefWidth="132" prefHeight="110"
+            userData="DOC:6" onAction="#onFlavor"/>
+    <Button text="유리창" styleClass="hotspot" layoutX="620" layoutY="90" prefWidth="140" prefHeight="215"
+            userData="호수 건너편, 저택 창문마다 희미한 불빛이 보인다. 회원들은 지금도 이 등대를 보고 있을 것이다."
+            onAction="#onFlavor"/>
+    <Button text="돌바닥" styleClass="hotspot" layoutX="230" layoutY="455" prefWidth="170" prefHeight="80"
+            userData="바닥 타일 사이사이에 손바닥만 한 거울들이 박혀 있다. 렌즈의 빛을 받아 어딘가로 보내는 장치 같다."
+            onAction="#onFlavor"/>
+
+    <Button text="▼ 3층 기관실" styleClass="room-arrow" layoutX="440" layoutY="492" prefWidth="160" prefHeight="38"
+            onAction="#goDown"/>
+</Pane>

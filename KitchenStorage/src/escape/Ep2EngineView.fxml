@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!-- 에피소드 2 등대 3층 기관실 (960 x 540). 좌표는 ep2_gear_bg.png 기준. -->
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.Ep2EngineController" styleClass="upper-room"
+      minWidth="960" prefWidth="960" maxWidth="960"
+      minHeight="540" prefHeight="540" maxHeight="540">
+    <Rectangle width="960" height="540" fill="#3b2f22"/>
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+    <Label text="3층 기관실" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <!-- 축에 끼운 톱니바퀴 (처음에는 숨김). 축 중심: 위(205,250) 왼쪽(146,318) 오른쪽(271,318) -->
+    <ImageView fx:id="gearLarge" fitWidth="112" fitHeight="112" layoutX="149" layoutY="194"
+               preserveRatio="true" visible="false" mouseTransparent="true"/>
+    <ImageView fx:id="gearSmall" fitWidth="62" fitHeight="62" layoutX="115" layoutY="287"
+               preserveRatio="true" visible="false" mouseTransparent="true"/>
+    <ImageView fx:id="gearMedium" fitWidth="84" fitHeight="84" layoutX="229" layoutY="276"
+               preserveRatio="true" visible="false" mouseTransparent="true"/>
+    <!-- 시계 바늘 (시계 퍼즐을 풀면 보인다) -->
+    <Pane fx:id="clockHands" layoutX="0" layoutY="0" mouseTransparent="true" visible="false"/>
+
+    <Button text="위쪽 축" styleClass="hotspot" layoutX="172" layoutY="216" prefWidth="66" prefHeight="66"
+            onAction="#onSpindleTop"/>
+    <Button text="왼쪽 축" styleClass="hotspot" layoutX="117" layoutY="290" prefWidth="58" prefHeight="56"
+            onAction="#onSpindleLeft"/>
+    <Button text="오른쪽 축" styleClass="hotspot" layoutX="242" layoutY="290" prefWidth="58" prefHeight="56"
+            onAction="#onSpindleRight"/>
+    <Button fx:id="crankButton" text="손잡이" styleClass="hotspot" layoutX="338" layoutY="315"
+            prefWidth="105" prefHeight="75" onAction="#onCrank"/>
+    <Button fx:id="clockButton" text="큰 시계" styleClass="hotspot" layoutX="405" layoutY="85"
+            prefWidth="255" prefHeight="290" onAction="#onClock"/>
+    <Button fx:id="chestButton" text="공구함" styleClass="hotspot" layoutX="25" layoutY="405"
+            prefWidth="175" prefHeight="95" onAction="#onChest"/>
+    <Button fx:id="doorButton" text="인장 철문" styleClass="hotspot" layoutX="748" layoutY="45"
+            prefWidth="160" prefHeight="260" onAction="#onDoor"/>
+    <Button text="계단" styleClass="hotspot" layoutX="680" layoutY="305" prefWidth="245" prefHeight="190"
+            onAction="#onDoor"/>
+    <Button text="파이프" styleClass="hotspot" layoutX="380" layoutY="0" prefWidth="340" prefHeight="50"
+            userData="파이프 속에서 물 흐르는 소리 대신 째깍째깍 소리가 난다. 등대 전체가 하나의 시계 같다."
+            onAction="#onFlavor"/>
+
+    <Button text="▼ 2층 관찰실" styleClass="room-arrow" layoutX="440" layoutY="492" prefWidth="160" prefHeight="38"
+            onAction="#goDown"/>
+</Pane>

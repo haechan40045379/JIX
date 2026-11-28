@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!-- 에피소드 2 등대 1층 기록 보관소 (960 x 540). 좌표는 ep2_archive_bg.png 기준. -->
+<Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="escape.Ep2ArchiveController" styleClass="upper-room"
+      minWidth="960" prefWidth="960" maxWidth="960"
+      minHeight="540" prefHeight="540" maxHeight="540">
+    <Rectangle width="960" height="540" fill="#3a2e24"/>
+    <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+    <Label text="1층 기록 보관소" layoutX="16" layoutY="10" styleClass="room-title"/>
+
+    <!-- UV 손전등으로 비추면 드러나는 글씨 -->
+    <Label fx:id="wallWriting" text="실패한 자들의 순서로,&#10;마지막은 처음으로.&#10;- 1" styleClass="uv-writing"
+           layoutX="712" layoutY="150" prefWidth="200" visible="false" mouseTransparent="true" wrapText="true"/>
+    <Label fx:id="deskWriting" text="13번 서랍은 너의 것이다." styleClass="uv-writing,uv-small"
+           layoutX="30" layoutY="318" visible="false" mouseTransparent="true"/>
+
+    <Button text="선반" styleClass="hotspot" layoutX="0" layoutY="55" prefWidth="138" prefHeight="240"
+            userData="장부의 등마다 연도가 적혀 있다. 1893, 1894, 1895... 한 해도 빠짐없이 오늘까지 이어진다."
+            onAction="#onFlavor"/>
+    <Button text="석유 램프" styleClass="hotspot" layoutX="138" layoutY="240" prefWidth="44" prefHeight="72"
+            userData="석유 램프가 아직 따뜻하다. 누군가 조금 전까지 여기 있었다."
+            onAction="#onFlavor"/>
+    <Button text="책상 위 서류" styleClass="hotspot" layoutX="35" layoutY="300" prefWidth="225" prefHeight="52"
+            onAction="#onDesk"/>
+    <Button text="나선 계단" styleClass="hotspot" layoutX="150" layoutY="0" prefWidth="185" prefHeight="300"
+            onAction="#goUp"/>
+    <Button fx:id="catalogButton" text="서랍장" styleClass="hotspot" layoutX="342" layoutY="135"
+            prefWidth="318" prefHeight="270" onAction="#onCatalog"/>
+    <Button fx:id="underButton" text="서랍장 아래" styleClass="hotspot" layoutX="345" layoutY="405"
+            prefWidth="312" prefHeight="28" onAction="#onUnder"/>
+    <Button text="회벽" styleClass="hotspot" layoutX="690" layoutY="92" prefWidth="240" prefHeight="275"
+            onAction="#onWall"/>
+    <Button text="천장 등" styleClass="hotspot" layoutX="428" layoutY="0" prefWidth="104" prefHeight="88"
+            userData="전구 하나가 방 전체를 비춘다. 전선은 계단을 따라 위층으로 이어진다."
+            onAction="#onFlavor"/>
+    <Button text="술통" styleClass="hotspot" layoutX="885" layoutY="365" prefWidth="75" prefHeight="175"
+            userData="통 안에서 기름 냄새가 난다. 등불의 연료일까."
+            onAction="#onFlavor"/>
+    <Button text="나무 상자" styleClass="hotspot" layoutX="0" layoutY="440" prefWidth="92" prefHeight="100"
+            userData="빈 상자 바닥에 '반송 불가'라는 낙인이 찍혀 있다."
+            onAction="#onFlavor"/>
+
+    <Button text="▼ 선착장" styleClass="room-arrow" layoutX="410" layoutY="492" prefWidth="140" prefHeight="38"
+            onAction="#goPier"/>
+</Pane>
