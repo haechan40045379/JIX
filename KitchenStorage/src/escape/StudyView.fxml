@@ -4,18 +4,43 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 
 <Pane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="escape.StudyController" styleClass="upper-room"
       minWidth="960" prefWidth="960" maxWidth="960"
       minHeight="540" prefHeight="540" maxHeight="540">
     <ImageView fx:id="background" fitWidth="960" fitHeight="540"/>
+    <!-- 스탠드를 끄면 어두워지는 막 -->
+    <Rectangle fx:id="darkness" width="960" height="540" fill="#05030a" opacity="0.72"
+               visible="false" mouseTransparent="true"/>
     <Label text="서재" layoutX="16" layoutY="10" styleClass="room-title"/>
 
     <Button text="타로 설명 책" styleClass="hotspot" layoutX="414" layoutY="166"
             prefWidth="57" prefHeight="57" wrapText="true" onAction="#onBookshelf"/>
     <Button text="금고" styleClass="hotspot" layoutX="761" layoutY="257"
             prefWidth="105" prefHeight="92" onAction="#onSafe"/>
+    <!-- 스토리 오브젝트 -->
+    <Button text="책상 위 일지" styleClass="hotspot" layoutX="440" layoutY="360" prefWidth="145" prefHeight="30"
+            userData="DOC:4"
+            onAction="#onFlavor"/>
+    <Button fx:id="lampButton" text="스탠드" styleClass="hotspot" layoutX="318" layoutY="280" prefWidth="62" prefHeight="105"
+            onAction="#onLamp"/>
+    <Button text="방명록" styleClass="hotspot" layoutX="380" layoutY="344" prefWidth="62" prefHeight="42"
+            userData="두꺼운 방명록. 참가자 1부터 12까지의 이름에 모두 붉은 줄이 그어져 있다. 13번째 칸만 비어 있다."
+            onAction="#onFlavor"/>
+    <Button text="새 책" styleClass="hotspot" layoutX="595" layoutY="356" prefWidth="62" prefHeight="32"
+            userData="'관찰 일지 vol.13' 이라고 적힌 새 책. 첫 장에 오늘 날짜만 적혀 있고 나머지는 비어 있다."
+            onAction="#onFlavor"/>
+    <Button text="철제 상자" styleClass="hotspot" layoutX="585" layoutY="248" prefWidth="54" prefHeight="38"
+            userData="작은 철제 상자 안에 등불 모양 배지 열두 개가 들어 있다. 배지 뒷면에 1부터 12까지 번호가 새겨져 있다."
+            onAction="#onFlavor"/>
+    <Button text="책장" styleClass="hotspot" layoutX="180" layoutY="95" prefWidth="140" prefHeight="245"
+            userData="책 제목이 이상하다. '복종의 미학', '관찰과 기록', '문을 여는 자'... 모두 같은 출판사, 흑등회."
+            onAction="#onFlavor"/>
+    <!-- 불을 끄면 보이는 야광 글씨 -->
+    <Button fx:id="glowButton" text="벽의 야광 글씨" styleClass="hotspot,glow-writing" layoutX="600" layoutY="96"
+            prefWidth="120" prefHeight="44" visible="false" onAction="#onGlow"/>
     <Button text="침실" styleClass="hotspot" layoutX="14" layoutY="94"
             prefWidth="111" prefHeight="398" onAction="#goToBedroom"/>
 </Pane>

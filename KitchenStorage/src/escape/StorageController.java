@@ -123,15 +123,7 @@ public class StorageController implements RoomController {
         if (rejectHeldItem()) {
             return;
         }
-        Object text = ((Node) event.getSource()).getUserData();
-        if (text == null) {
-            host.showMessage("특별한 것은 없다.");
-        } else if (GameState.isParticipantNote(text.toString())) {
-            state.addClue(text.toString());
-            host.showMessage(text + " (단서 기록에 추가됨)");
-        } else {
-            host.showMessage(text.toString());
-        }
+        Story.flavor(host, ((Node) event.getSource()).getUserData());
     }
 
     @FXML

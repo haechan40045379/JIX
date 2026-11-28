@@ -65,6 +65,16 @@
             userData="낮은 목재 수납장 위에 마른 식물이 꽂힌 꽃병과 작은 나무 상자가 놓여 있다."
             onAction="#onFlavor"/>
 
+    <!-- 스토리 오브젝트 -->
+    <Button text="식기장 위 상자" styleClass="hotspot" layoutX="198" layoutY="112" prefWidth="70" prefHeight="34"
+            userData="DOC:3"
+            onAction="#onFlavor"/>
+    <Button text="천장 조명" styleClass="hotspot" layoutX="430" layoutY="38" prefWidth="96" prefHeight="45"
+            userData="등갓 안쪽에서 렌즈가 식탁을 내려다보고 있다. 이 식탁에서 무슨 일이 있었던 걸까."
+            onAction="#onFlavor"/>
+    <Button text="꽃병" styleClass="hotspot" layoutX="702" layoutY="208" prefWidth="48" prefHeight="70"
+            userData="마른 꽃 사이에 말린 쪽지가 꽂혀 있다. '식탁에는 늘 한 자리가 비어 있다. 그 자리는 우리 몫이다. - 참가자 9'"
+            onAction="#onFlavor"/>
     <!-- 오른쪽 출입구: 주방 이동 -->
     <Button text="주방" styleClass="hotspot"
             layoutX="856" layoutY="90" prefWidth="104" prefHeight="344"

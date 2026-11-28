@@ -78,6 +78,7 @@ public class StopwatchController implements PuzzleController {
 
     @Override
     public void onClose() {
+        SoundManager.stopSfx("sfx_tick");
         timer.stop();
         running = false;
     }
@@ -106,6 +107,7 @@ public class StopwatchController implements PuzzleController {
         hand.setVisible(true);
         setHand(0);
         timer.start();
+        SoundManager.loopSfx("sfx_tick");
         startButton.setDisable(true);
         stopButton.setDisable(false);
         resultLabel.setText("");
@@ -118,6 +120,7 @@ public class StopwatchController implements PuzzleController {
         }
         double elapsed = (System.nanoTime() - startNanos) / 1_000_000_000.0;
         timer.stop();
+        SoundManager.stopSfx("sfx_tick");
         running = false;
         stopButton.setDisable(true);
         timeLabel.setText(format(elapsed));
@@ -134,6 +137,7 @@ public class StopwatchController implements PuzzleController {
         } else {
             String diff = elapsed < TARGET_SECONDS ? "너무 빨랐다" : "너무 늦었다";
             resultLabel.setText(format(elapsed) + "초 - " + diff + ". 리셋 후 다시 시도하자.");
+            GameState.get().penalize(GameState.PENALTY_SMALL, "스톱워치 실패");
         }
     }
 
@@ -143,6 +147,7 @@ public class StopwatchController implements PuzzleController {
             return;
         }
         timer.stop();
+        SoundManager.stopSfx("sfx_tick");
         running = false;
         timeLabel.setText("00.00");
         hand.setVisible(true);

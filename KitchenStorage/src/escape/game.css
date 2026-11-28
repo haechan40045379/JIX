@@ -276,3 +276,202 @@
     -fx-background-radius: 10;
     -fx-cursor: hand;
 }
+
+/* ===== 제한 시간 ===== */
+.hud-timer {
+    -fx-text-fill: #efe2cd;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Consolas", "monospace";
+    -fx-background-color: rgba(0, 0, 0, 0.35);
+    -fx-background-radius: 4;
+    -fx-padding: 3 8 3 8;
+}
+
+.hud-timer-warn {
+    -fx-text-fill: #ff5a44;
+}
+
+/* ===== 업적 알림 ===== */
+.toast {
+    -fx-background-color: rgba(33, 24, 18, 0.95);
+    -fx-border-color: #f0c060;
+    -fx-border-width: 1;
+    -fx-text-fill: #f0c060;
+    -fx-font-size: 14px;
+    -fx-padding: 10 16 10 16;
+}
+
+/* ===== 힌트 ===== */
+.hint-text {
+    -fx-text-fill: #f0e0b0;
+    -fx-font-size: 17px;
+}
+
+/* ===== 미니맵 ===== */
+.map-pane {
+    -fx-background-color: #17110d;
+}
+.map-floor {
+    -fx-text-fill: #8f7a5c;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.map-link {
+    -fx-stroke: #8f7a5c;
+    -fx-stroke-width: 3;
+    -fx-stroke-dash-array: 6 5;
+}
+.map-room {
+    -fx-background-color: #3a2a1d;
+    -fx-border-color: #b99451;
+    -fx-border-width: 1.5;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+}
+.map-room-unknown {
+    -fx-background-color: #201814;
+    -fx-border-color: #4a3c2e;
+    -fx-border-style: dashed;
+}
+.map-room-current {
+    -fx-background-color: #6b4a22;
+    -fx-border-color: #f0c060;
+    -fx-border-width: 3;
+}
+.map-room-name {
+    -fx-text-fill: #efe2cd;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+.map-room-status {
+    -fx-text-fill: #d6b46b;
+    -fx-font-size: 12px;
+}
+.map-room-here {
+    -fx-text-fill: #ffd27a;
+    -fx-font-size: 12px;
+}
+.map-legend {
+    -fx-text-fill: #a8957a;
+    -fx-font-size: 12px;
+}
+
+
+/* ---- 스토리: 흑등회 기록 / 초대장 ---- */
+.story-doc {
+    -fx-font-size: 15px;
+    -fx-line-spacing: 3px;
+}
+
+/* 서재: 불을 끄면 보이는 야광 글씨 */
+.glow-writing,
+.with-image .glow-writing {
+    -fx-background-color: rgba(120, 255, 170, 0.10);
+    -fx-border-color: rgba(140, 255, 180, 0.55);
+    -fx-text-fill: #9dffc0;
+    -fx-opacity: 1;
+    -fx-effect: dropshadow(gaussian, #6dff9e, 14, 0.4, 0, 0);
+}
+
+/* ===================== 에피소드 2 ===================== */
+/* UV 손전등으로 드러나는 보랏빛 글씨 */
+.uv-writing {
+    -fx-text-fill: #d9a6ff;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-effect: dropshadow(gaussian, #b25cff, 16, 0.45, 0, 0);
+}
+.uv-small {
+    -fx-font-size: 14px;
+}
+
+/* 선원 수첩 신호표 / 신호 받아 적기 */
+.morse-table {
+    -fx-font-family: "Consolas", "Malgun Gothic", monospace;
+    -fx-font-size: 18px;
+}
+.morse-transcript {
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-size: 26px;
+    -fx-text-fill: #ffe9a0;
+    -fx-min-height: 34;
+}
+
+/* 철문 다이얼 숫자 칸 */
+.ep2-dial {
+    -fx-font-size: 26px;
+}
+
+/* 참가자 서랍장 */
+.drawer {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+}
+.drawer:hover {
+    -fx-background-color: rgba(255, 230, 170, 0.12);
+    -fx-border-color: rgba(255, 230, 170, 0.7);
+}
+.drawer-open, .drawer-open:disabled {
+    -fx-opacity: 1;
+    -fx-background-color: rgba(10, 6, 2, 0.45);
+    -fx-border-color: #f0c060;
+    -fx-border-width: 2;
+}
+.drawer-number {
+    -fx-text-fill: #3a260f;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+/* 배전반 회로 타일 */
+.circuit-tile {
+    -fx-background-color: rgba(30, 24, 18, 0.55);
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+.circuit-tile:hover {
+    -fx-background-color: rgba(70, 56, 36, 0.75);
+}
+
+/* 감시 모니터 */
+.monitor-tile {
+    -fx-background-color: #14130f;
+    -fx-border-color: #5e5443;
+    -fx-border-width: 2;
+    -fx-padding: 6;
+    -fx-cursor: hand;
+}
+.monitor-tile:hover {
+    -fx-border-color: #f0c060;
+}
+.monitor-scan {
+    -fx-fill: linear-gradient(from 0% 0% to 0% 4%, repeat, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.0) 50%, rgba(0,0,0,0.22) 51%, rgba(0,0,0,0.22) 100%);
+}
+.monitor-cam {
+    -fx-text-fill: #dfe8d0;
+    -fx-font-size: 11px;
+    -fx-padding: 3 6 3 6;
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+.monitor-clock {
+    -fx-text-fill: #9dffb0;
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-size: 15px;
+}
+
+/* 등실 거울 */
+.mirror-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: rgba(216, 241, 255, 0.25);
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+.mirror-cell:hover {
+    -fx-background-color: rgba(216, 241, 255, 0.15);
+    -fx-border-color: #d8f1ff;
+}

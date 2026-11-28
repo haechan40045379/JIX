@@ -121,7 +121,10 @@ public class SequenceController implements PuzzleController {
         playback = new SequentialTransition();
         playback.getChildren().add(new PauseTransition(Duration.seconds(0.6)));
         for (int idx : answer) {
-            playback.getChildren().add(step(0.05, () -> light(idx, true)));
+            playback.getChildren().add(step(0.05, () -> {
+                light(idx, true);
+                SoundManager.sfx("sfx_beep_" + (idx + 1));
+            }));
             playback.getChildren().add(step(0.55, () -> light(idx, false)));
             playback.getChildren().add(step(0.25, null));
         }
@@ -142,6 +145,7 @@ public class SequenceController implements PuzzleController {
             return;
         }
         flash(idx);
+        SoundManager.sfx("sfx_beep_" + (idx + 1));
 
         if (answer.get(inputIndex) != idx) {
             accepting = false;
@@ -149,6 +153,7 @@ public class SequenceController implements PuzzleController {
             setLamp("#ff3a2a");
             infoLabel.setText("틀렸다! (" + (idx + 1) + " " + NAMES[idx] + ") 재생 버튼으로 다시 도전하자.");
             progressLabel.setText("");
+            GameState.get().penalize(GameState.PENALTY_SMALL, "순서 패널 오답");
             return;
         }
 

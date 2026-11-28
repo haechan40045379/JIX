@@ -27,8 +27,6 @@ public class KitchenController implements RoomController {
 
     private final GameState state = GameState.get();
     private GameHost host;
-    /** 퓨즈는 패널에 끼우면 인벤토리에서 사라지므로, 수납장 상태는 따로 기억한다. */
-    private boolean fuseTaken;
 
     @Override
     public void setHost(GameHost host) {
@@ -46,7 +44,7 @@ public class KitchenController implements RoomController {
         } else {
             fridgeButton.setText("냉장고\n(잠김)");
         }
-        cabinetButton.setText(fuseTaken ? "수납장\n(비었다)" : "수납장");
+        cabinetButton.setText(state.isFuseTaken() ? "수납장\n(비었다)" : "수납장");
     }
 
     @FXML
@@ -105,12 +103,11 @@ public class KitchenController implements RoomController {
         if (rejectHeldItem()) {
             return;
         }
-        if (fuseTaken) {
+        if (state.isFuseTaken()) {
             host.showMessage("수납장에는 녹슨 배관과 거미줄뿐이다.");
             return;
         }
-        fuseTaken = true;
-        state.addItem(GameState.FUSE);
+        state.takeFuse();
         host.showMessage("녹슨 배관 뒤에 무언가 끼어 있다. [" + GameState.displayName(GameState.FUSE)
                 + "] 획득! (인벤토리에서 더블클릭하면 살펴볼 수 있다)");
         refresh();
@@ -122,15 +119,7 @@ public class KitchenController implements RoomController {
         if (rejectHeldItem()) {
             return;
         }
-        Object text = ((Node) event.getSource()).getUserData();
-        if (text == null) {
-            host.showMessage("특별한 것은 없다.");
-        } else if (GameState.isParticipantNote(text.toString())) {
-            state.addClue(text.toString());
-            host.showMessage(text + " (단서 기록에 추가됨)");
-        } else {
-            host.showMessage(text.toString());
-        }
+        Story.flavor(host, ((Node) event.getSource()).getUserData());
     }
 
     @FXML

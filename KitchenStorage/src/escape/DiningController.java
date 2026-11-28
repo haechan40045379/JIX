@@ -105,8 +105,7 @@ public class DiningController implements RoomController {
         if (rejectHeldItem()) {
             return;
         }
-        Object text = ((Node) event.getSource()).getUserData();
-        host.showMessage(text == null ? "특별한 것은 없다." : text.toString());
+        Story.flavor(host, ((Node) event.getSource()).getUserData());
     }
 
     @FXML

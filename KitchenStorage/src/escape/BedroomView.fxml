@@ -30,6 +30,24 @@
     <Button text="서재" styleClass="hotspot" layoutX="813" layoutY="300"
             prefWidth="45" prefHeight="99" onAction="#goToStudy"/>
 
+
+    <!-- 스토리 오브젝트 -->
+    <Button text="침대" styleClass="hotspot" layoutX="92" layoutY="300" prefWidth="268" prefHeight="135"
+            userData="침대 시트가 아직 따뜻하다. 베개 밑에 구겨진 쪽지가 있다. '탁자 위의 글부터 읽어라. 그림을 함부로 고르면 시간만 잃는다. - 참가자 3'"
+            onAction="#onFlavor"/>
+    <Button text="협탁" styleClass="hotspot" layoutX="0" layoutY="255" prefWidth="90" prefHeight="200"
+            userData="DOC:1"
+            onAction="#onFlavor"/>
+    <Button text="서랍장" styleClass="hotspot" layoutX="858" layoutY="302" prefWidth="97" prefHeight="170"
+            userData="서랍 속 옷가지가 모두 같은 치수다. ...내 치수다. 누군가 나를 오래 지켜봐 왔다."
+            onAction="#onFlavor"/>
+    <Button text="작은 풍경화" styleClass="hotspot" layoutX="24" layoutY="102" prefWidth="88" prefHeight="80"
+            userData="호숫가 저택을 그린 작은 그림. 그림 속 저택의 2층 창문 하나에만 불이 켜져 있다. 바로 이 방이다."
+            onAction="#onFlavor"/>
+    <Button text="샹들리에" styleClass="hotspot" layoutX="392" layoutY="0" prefWidth="180" prefHeight="100"
+            userData="전구 사이에서 작은 유리 렌즈가 반짝인다. 저장고에서 본 것과 같은 렌즈다. 이 방도 지켜보고 있다."
+            onAction="#onFlavor"/>
+
     <Button text="↓" accessibleText="현관 홀로 이동" styleClass="room-arrow"
             layoutX="449" layoutY="511" prefWidth="62" prefHeight="28" onAction="#goToEntrance">
         <tooltip><Tooltip text="현관 홀로 이동"/></tooltip>

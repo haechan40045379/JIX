@@ -3,6 +3,7 @@ package escape;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -125,6 +126,7 @@ public class BedroomController implements RoomController {
                 if (CORRECT_ORDER.get(index) != card) {
                     reset.run();
                     result.setText("순서가 틀렸다. 처음부터 다시 선택해야 한다.");
+                    state.penalize(GameState.PENALTY_SMALL, "타로 그림 순서 오답");
                     return;
                 }
                 selectedButtons.add(button);
@@ -184,6 +186,12 @@ public class BedroomController implements RoomController {
         Label label = new Label(text);
         label.getStyleClass().add("puzzle-text");
         return label;
+    }
+
+    /** 분위기 / 스토리 오브젝트 (userData). */
+    @FXML
+    private void onFlavor(ActionEvent event) {
+        Story.flavor(host, ((javafx.scene.Node) event.getSource()).getUserData());
     }
 
     @FXML

@@ -170,6 +170,7 @@ public class DiningTablePuzzleController implements PuzzleController {
         }
         if (!isAnswerMatch()) {
             statusLabel.setText("아무런 반응이 없다. 식기 배열이 잘못된 것 같다.");
+            GameState.get().penalize(GameState.PENALTY_SMALL, "식기 배열 오답");
             return;
         }
         if (!GameState.get().isPaintingRestored()) {

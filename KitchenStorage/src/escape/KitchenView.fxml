@@ -23,7 +23,7 @@
     <!-- 왼쪽 벽 선반의 병들 (분위기) -->
     <Button text="선반" styleClass="hotspot"
             layoutX="49" layoutY="66" prefWidth="215" prefHeight="115"
-            userData="먼지 쌓인 병과 양철통. 라벨은 모두 지워져 있다."
+            userData="DOC:5"
             onAction="#onFlavor"/>
 
     <!-- 조리대 위 쪽지 (단서) -->

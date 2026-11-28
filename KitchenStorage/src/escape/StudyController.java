@@ -1,6 +1,9 @@
 package escape;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
@@ -25,7 +28,13 @@ public class StudyController implements RoomController {
             세계
             완성, 성취, 여정의 끝""";
 
+    static final String GLOW_NOTE =
+            "불을 끄자 벽에 야광 글씨가 떠오른다. '금고 번호는 그림이 알려준다. 그들은 우리를 보고 있다. - 참가자 9'";
+
     @FXML private ImageView background;
+    @FXML private Rectangle darkness;
+    @FXML private Button glowButton;
+    @FXML private Button lampButton;
 
     private final GameState state = GameState.get();
     private GameHost host;
@@ -57,6 +66,28 @@ public class StudyController implements RoomController {
             host.closeOverlay();
             host.showMessage("철컥! 금고가 열렸다. 탈출 열쇠 조각 3을 획득했다.");
         });
+    }
+
+    /** 스탠드 켜기/끄기: 끄면 방이 어두워지고 벽의 야광 글씨가 보인다. */
+    @FXML
+    private void onLamp() {
+        boolean dark = !darkness.isVisible();
+        darkness.setVisible(dark);
+        glowButton.setVisible(dark);
+        lampButton.setText(dark ? "스탠드 (꺼짐)" : "스탠드");
+        host.showMessage(dark ? "딸깍. 스탠드를 끄자 서재가 어둠에 잠긴다. 벽 한쪽이 희미하게 빛난다."
+                : "딸깍. 스탠드를 다시 켰다.");
+    }
+
+    @FXML
+    private void onGlow() {
+        Story.flavor(host, GLOW_NOTE);
+    }
+
+    /** 분위기 / 스토리 오브젝트 (userData). */
+    @FXML
+    private void onFlavor(ActionEvent event) {
+        Story.flavor(host, ((javafx.scene.Node) event.getSource()).getUserData());
     }
 
     @FXML

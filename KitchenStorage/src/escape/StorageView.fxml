@@ -39,7 +39,7 @@
     <!-- 왼쪽 아래 큰 상자 (분위기) -->
     <Button text="큰 상자" styleClass="hotspot"
             layoutX="0" layoutY="333" prefWidth="118" prefHeight="143"
-            userData="못이 박힌 상자. 옆면에 '시험장 비품 - 반출 금지'라고 찍혀 있다."
+            userData="DOC:6"
             onAction="#onFlavor"/>
 
     <!-- 전구 (분위기) -->

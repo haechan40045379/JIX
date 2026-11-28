@@ -56,6 +56,7 @@ public class SafePuzzleController implements PuzzleController {
             solve.run();
         } else {
             result.setText("비밀번호가 틀렸다.");
+            GameState.get().penalize(GameState.PENALTY_BIG, "금고 비밀번호 오답");
         }
     }
 
