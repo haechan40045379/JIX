@@ -82,7 +82,7 @@ public class Ep2MorseController extends Ep2Puzzle {
                 timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(t), e -> {
                     light.setOpacity(1);
                     transcript.setText(shown);
-                    SoundManager.sfx(SoundManager.first("sfx_signal_lamp", "sfx_beep_1"), 0.25);
+                    SoundManager.sfx("sfx_beep_1", 0.25);
                 }));
                 t += dash ? 3 * u : u;
                 timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(t), e -> light.setOpacity(0)));
